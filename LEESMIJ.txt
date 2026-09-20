@@ -1,0 +1,53 @@
+GEBOORTEREGISTER — losse webapp
+================================
+
+Deze map is een complete website. Er zit niets van Claude meer in: geen
+account, geen verbinding, geen server die iets bewaart. Alles wat iemand
+registreert, blijft in de browser van haar eigen toestel staan.
+
+WAT ZIT ERIN
+------------
+index.html              de app zelf (alles zit in dit ene bestand)
+manifest.webmanifest    zorgt dat de app op het beginscherm kan
+icon-192.png            icoon
+icon-512.png            icoon
+apple-touch-icon.png    icoon voor iPhone
+
+ONLINE ZETTEN
+-------------
+De app moet via https bereikbaar zijn. Pas dan kan ze op het beginscherm
+gezet worden en bewaart de browser de gegevens betrouwbaar. Drie manieren,
+van makkelijk naar technisch:
+
+1. Netlify Drop (netlify.com/drop) — sleep deze hele map op de pagina.
+   Je krijgt meteen een https-adres. Gratis, geen installatie.
+2. GitHub Pages — zet de bestanden in een repository en schakel Pages in.
+3. Eigen webhosting — upload de map via FTP naar een submap van je domein.
+
+Belangrijk: upload alle bestanden samen, naast elkaar. index.html alleen
+werkt ook, maar dan zonder icoon op het beginscherm.
+
+Het bestand gewoon openen vanaf je computer (dubbelklikken) is alleen
+handig om even te kijken. Sommige browsers bewaren dan niets en het
+beginscherm-icoon werkt niet.
+
+DOORGEVEN
+---------
+Stuur het https-adres door. Wie het opent, krijgt een leeg register.
+Iedereen houdt zijn eigen gegevens; niemand ziet die van een ander, jij
+ook niet.
+
+Zeg er dit bij: zet de app eerst op je beginscherm (iPhone: deelknop,
+"Zet op beginscherm" — Android: menu met drie puntjes, "App installeren")
+en vul daarna pas in. Wat je invult hoort bij de manier waarop je de app
+opende, dus registraties uit een gewoon browservenster zie je niet terug
+in de app op het beginscherm.
+
+BACK-UP
+-------
+Onder de knop met de drie streepjes bovenaan zit "Back-up exporteren".
+Dat levert één bestand met alle registraties. Dat bestand is de enige
+manier om de gegevens naar een ander toestel te verhuizen, of om ze terug
+te zetten na het wissen van de browsergegevens. Verhuis je de app later
+naar een ander webadres, dan verhuizen de gegevens NIET mee — exporteren
+op het oude adres, importeren op het nieuwe.

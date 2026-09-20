@@ -1,0 +1,1868 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<meta name="theme-color" content="#73356A">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Register">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="description" content="Register voor een vroedvrouw: bevallingen en NICU-kindjes bijhouden.">
+<style>
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; font: 14px system-ui, sans-serif; background: #FBF8F7; }
+  img { max-width: 100%; }
+  [hidden] { display: none !important; }
+</style>
+<title>Geboorteregister</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=Karla:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap">
+
+<style>
+  :root {
+    color-scheme: light;
+    --ground: #FBF8F7;
+    --surface: #FFFFFF;
+    --surface-2: #F4EFF1;
+    --ink: #221B26;
+    --ink-soft: #675C6D;
+    --ink-faint: #8B7F90;
+    --line: #E7DFE4;
+    --line-strong: #D5C9D0;
+
+    --accent: #73356A;
+    --accent-ink: #FFFFFF;
+    --accent-soft: #F3E7F0;
+    --accent-deep: #4E2049;
+    --hero-bg: #73356A;
+    --hero-ink: #FFFFFF;
+
+    /* categorische reeks — gevalideerd voor beide thema's */
+    --boy: #2a78d6;
+    --boy-ink: #1F5FAE;
+    --boy-soft: #E5EEFB;
+    --girl: #e87ba4;
+    --girl-ink: #B23C6C;
+    --girl-soft: #FBE9F0;
+
+    --unknown: #8B7F90;
+    --unknown-soft: #EFEBF0;
+    --still: #4F5A67;
+    --still-soft: #E8EBEF;
+    --nicu: #A9641F;
+    --nicu-soft: #F9EBDA;
+    --ok: #35735A;
+    --ok-soft: #E5EFE9;
+    --danger: #A33636;
+
+    --radius: 14px;
+    --radius-s: 10px;
+    --shadow: 0 1px 2px rgba(34, 27, 38, .05), 0 10px 30px rgba(34, 27, 38, .07);
+    --bar-h: 70px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --ground: #141018;
+      --surface: #1D1722;
+      --surface-2: #272031;
+      --ink: #F3ECF2;
+      --ink-soft: #B4A7B8;
+      --ink-faint: #8B7F91;
+      --line: #342B3C;
+      --line-strong: #493E51;
+
+      --accent: #D79BC8;
+      --accent-ink: #2A1226;
+      --accent-soft: #382034;
+      --accent-deep: #E9C2DF;
+    --hero-bg: #47243F;
+    --hero-ink: #F6E2F0;
+      --hero-bg: #47243F;
+      --hero-ink: #F6E2F0;
+
+      --boy: #3987e5;
+      --boy-ink: #8CC0F5;
+      --boy-soft: #17263C;
+      --girl: #d55181;
+      --girl-ink: #F0A5C1;
+      --girl-soft: #3A1F2C;
+
+      --unknown: #A99CAE;
+      --unknown-soft: #2C2434;
+      --still: #A4B1BF;
+      --still-soft: #232B34;
+      --nicu: #E0A464;
+      --nicu-soft: #372716;
+      --ok: #7FC79E;
+      --ok-soft: #1C2C24;
+      --danger: #E39292;
+      --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 12px 32px rgba(0, 0, 0, .3);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --ground: #141018;
+    --surface: #1D1722;
+    --surface-2: #272031;
+    --ink: #F3ECF2;
+    --ink-soft: #B4A7B8;
+    --ink-faint: #8B7F91;
+    --line: #342B3C;
+    --line-strong: #493E51;
+
+    --accent: #D79BC8;
+    --accent-ink: #2A1226;
+    --accent-soft: #382034;
+    --accent-deep: #E9C2DF;
+
+    --boy: #3987e5;
+    --boy-ink: #8CC0F5;
+    --boy-soft: #17263C;
+    --girl: #d55181;
+    --girl-ink: #F0A5C1;
+    --girl-soft: #3A1F2C;
+
+    --unknown: #A99CAE;
+    --unknown-soft: #2C2434;
+    --still: #A4B1BF;
+    --still-soft: #232B34;
+    --nicu: #E0A464;
+    --nicu-soft: #372716;
+    --ok: #7FC79E;
+    --ok-soft: #1C2C24;
+    --danger: #E39292;
+    --shadow: 0 1px 2px rgba(0, 0, 0, .35), 0 12px 32px rgba(0, 0, 0, .3);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: "Karla", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    font-size: 15px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  h1, h2, h3 { font-family: "Newsreader", Georgia, serif; font-weight: 500; margin: 0; text-wrap: balance; }
+
+  .mono { font-family: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace; font-variant-numeric: tabular-nums; }
+
+  .eyebrow {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-faint);
+  }
+
+  /* ================= chrome ================= */
+
+  .shell { max-width: 940px; margin: 0 auto; padding-inline: 16px; }
+
+  header.top {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 30;
+    background: color-mix(in srgb, var(--ground) 90%, transparent);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--line);
+  }
+  .top-row { display: flex; align-items: center; gap: 10px; padding: 10px 0 8px; }
+  .top-row h1 { font-size: 19px; letter-spacing: -.01em; margin-right: auto; white-space: nowrap; }
+
+  .year-pick {
+    position: relative; display: inline-flex; align-items: center;
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: 999px; padding: 0 30px 0 13px; height: 36px;
+  }
+  .year-pick select {
+    position: absolute; inset: 0; width: 100%; height: 100%;
+    opacity: 0; border: 0; cursor: pointer; -webkit-appearance: none; appearance: none;
+  }
+  .year-pick .val { font-size: 14px; font-weight: 700; }
+  .year-pick::after {
+    content: ""; position: absolute; right: 12px; width: 7px; height: 7px;
+    border-right: 1.8px solid var(--ink-faint); border-bottom: 1.8px solid var(--ink-faint);
+    transform: rotate(45deg) translateY(-2px); pointer-events: none;
+  }
+  .year-pick:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  .menu-btn {
+    width: 38px; height: 38px; border-radius: 10px; flex: none; position: relative;
+    border: 1px solid var(--line-strong); background: var(--surface); cursor: pointer;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    transition: background .14s ease;
+  }
+  .menu-btn:hover { background: var(--surface-2); }
+  .menu-btn i { display: block; width: 17px; height: 2px; border-radius: 2px; background: var(--ink); }
+  .menu-btn .badge {
+    position: absolute; top: -4px; right: -4px; width: 11px; height: 11px; border-radius: 50%;
+    background: var(--nicu); border: 2px solid var(--ground);
+  }
+
+  nav.tabs { display: flex; gap: 4px; padding-bottom: 8px; overflow-x: auto; scrollbar-width: none; }
+  nav.tabs::-webkit-scrollbar { display: none; }
+  nav.tabs button {
+    flex: 1 1 auto; min-width: max-content;
+    border: 0; background: transparent; color: var(--ink-soft);
+    font: inherit; font-size: 14px; font-weight: 600;
+    padding: 8px 14px; border-radius: 999px; cursor: pointer; white-space: nowrap;
+    transition: background .15s ease, color .15s ease;
+  }
+  nav.tabs button:hover { background: var(--surface-2); }
+  nav.tabs button[aria-selected="true"] { background: var(--accent); color: var(--accent-ink); }
+  nav.tabs button .n { font-size: 12px; opacity: .72; margin-left: 5px; font-variant-numeric: tabular-nums; }
+  nav.tabs .lbl-short { display: none; }
+
+  .setting-p { margin: 0 0 9px; font-size: 13.5px; color: var(--ink-soft); }
+  .setting-p strong { color: var(--ink); }
+  .linkbox { display: flex; gap: 8px; }
+  .linkbox input { font-family: "IBM Plex Mono", ui-monospace, monospace; font-size: 12.5px; }
+  .linkbox .btn { flex: none; }
+
+  main { padding-block: 16px 0; }
+  .pane { animation: rise .22s ease both; }
+  @keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  .pad-bottom { height: calc(96px + env(safe-area-inset-bottom, 0px)); }
+
+  /* ================= action bar ================= */
+
+  .actionbar {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+    background: color-mix(in srgb, var(--ground) 92%, transparent);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--line);
+    padding: 10px 16px calc(10px + env(safe-area-inset-bottom, 0px));
+  }
+  .actionbar .inner { max-width: 940px; margin: 0 auto; display: flex; gap: 10px; }
+  .actionbar button { flex: 1; min-height: 48px; }
+
+  /* ================= knoppen & velden ================= */
+
+  button, select, input, textarea { font: inherit; color: inherit; }
+
+  .btn {
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink);
+    border-radius: 11px; padding: 10px 14px; font-size: 14.5px; font-weight: 700; cursor: pointer;
+    transition: transform .1s ease, background .15s ease, border-color .15s ease;
+  }
+  .btn:active { transform: scale(.98); }
+  .btn:hover { background: var(--surface-2); }
+  .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+  .btn.nicu { background: var(--nicu); border-color: var(--nicu); color: #fff; }
+  :root[data-theme="dark"] .btn.nicu, :root:not([data-theme="light"]) .btn.nicu { color: #2A1A08; }
+  .btn.small { padding: 7px 11px; font-size: 13px; border-radius: 9px; }
+  .btn.ghost { border-color: transparent; background: transparent; color: var(--ink-soft); font-weight: 600; }
+  .btn.ghost:hover { background: var(--surface-2); color: var(--ink); }
+  .btn[disabled] { opacity: .45; cursor: not-allowed; }
+
+  :is(button, select, input, textarea, [tabindex]):focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  select, input[type="text"], input[type="number"], input[type="date"], textarea {
+    background: var(--surface); border: 1px solid var(--line-strong);
+    border-radius: 10px; padding: 11px 12px; width: 100%; min-height: 44px; color: var(--ink);
+  }
+  textarea { resize: vertical; min-height: 66px; font-family: inherit; }
+
+  /* ================= overzicht ================= */
+
+  .hero {
+    background: var(--hero-bg);
+    color: var(--hero-ink);
+    border-radius: var(--radius);
+    padding: 18px 18px 16px;
+    display: flex; align-items: flex-end; gap: 18px; flex-wrap: wrap;
+    position: relative; overflow: hidden;
+  }
+  .hero::after {
+    content: ""; position: absolute; right: -60px; top: -80px; width: 220px; height: 220px;
+    border-radius: 50%; background: rgba(255, 255, 255, .07); pointer-events: none;
+  }
+  .hero .eyebrow { color: color-mix(in srgb, var(--hero-ink) 66%, transparent); }
+  .hero .big {
+    font-family: "Newsreader", Georgia, serif; font-size: 62px; line-height: .92;
+    font-variant-numeric: tabular-nums; letter-spacing: -.02em; margin-top: 2px;
+  }
+  .hero .big-label { font-size: 14px; font-weight: 600; opacity: .88; margin-top: 4px; }
+  .hero .side { margin-left: auto; display: flex; gap: 22px; position: relative; z-index: 1; }
+  .hero .side div { text-align: right; }
+  .hero .side .v { font-size: 25px; font-weight: 700; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .hero .side .l { font-size: 11.5px; opacity: .8; }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-top: 10px; }
+
+  .stat {
+    border-radius: var(--radius-s); padding: 12px 13px;
+    background: var(--surface); border: 1px solid var(--line);
+    display: flex; flex-direction: column; gap: 1px;
+  }
+  .stat.tint { border-color: transparent; background: var(--tint-soft); }
+  .stat .l { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+  .stat .v { font-size: 28px; font-weight: 700; line-height: 1.15; font-variant-numeric: tabular-nums; color: var(--tint, var(--ink)); }
+  .stat .f { font-size: 11px; color: var(--ink-faint); font-variant-numeric: tabular-nums; }
+  .stat.tint .l { color: color-mix(in srgb, var(--tint) 78%, var(--ink)); }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--line);
+    border-radius: var(--radius); padding: 15px 16px; margin-top: 10px;
+  }
+  .card > .ch { display: flex; align-items: baseline; gap: 10px; margin-bottom: 12px; }
+  .card > .ch h2 { font-size: 17px; margin-right: auto; }
+  .card > .ch .note { font-size: 12px; color: var(--ink-faint); }
+
+  /* verhoudingsbalk jongens / meisjes */
+  .prop { display: flex; gap: 2px; height: 16px; }
+  .prop span { border-radius: 3px; min-width: 3px; transition: flex-grow .4s ease; }
+  .prop span:first-child { border-radius: 8px 3px 3px 8px; }
+  .prop span:last-child { border-radius: 3px 8px 8px 3px; }
+  .prop .p-boy { background: var(--boy); }
+  .prop .p-girl { background: var(--girl); }
+  .prop .p-unknown { background: repeating-linear-gradient(135deg, var(--unknown) 0 3px, transparent 3px 6px), var(--unknown-soft); }
+  .prop-legend { display: flex; flex-wrap: wrap; gap: 8px 16px; margin-top: 11px; }
+  .prop-legend .it { display: flex; align-items: center; gap: 7px; font-size: 13px; }
+  .prop-legend .sw { width: 11px; height: 11px; border-radius: 3px; flex: none; }
+  .prop-legend .num { font-weight: 700; font-variant-numeric: tabular-nums; }
+  .prop-legend .pct { color: var(--ink-faint); font-size: 12px; font-variant-numeric: tabular-nums; }
+
+  /* maandgrafiek */
+  .months { display: flex; align-items: flex-end; gap: 4px; height: var(--bar-h); margin-top: 6px; }
+  .months .m { flex: 1; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; height: 100%; gap: 3px; }
+  .months .cnt { font-size: 10.5px; font-weight: 700; color: var(--ink-soft); font-variant-numeric: tabular-nums; height: 13px; }
+  .months .bar {
+    width: 100%; background: var(--accent); border-radius: 4px 4px 0 0;
+    min-height: 2px; animation: grow .45s cubic-bezier(.2, .8, .3, 1) both;
+  }
+  .months .bar.zero { background: var(--line); }
+  @keyframes grow { from { transform: scaleY(.04); } to { transform: none; } }
+  .months .bar { transform-origin: bottom; }
+  .month-axis { display: flex; gap: 4px; border-top: 1px solid var(--line); padding-top: 5px; }
+  .month-axis span { flex: 1; text-align: center; font-size: 10.5px; color: var(--ink-faint); }
+
+  /* ================= lijsten ================= */
+
+  ul.entries { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+  ul.entries li {
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-s);
+    padding: 11px 12px; display: flex; gap: 10px; align-items: flex-start;
+  }
+  li.rec { border-left: 3px solid var(--edge, var(--line)); }
+  .entry-main { flex: 1; min-width: 0; }
+  .entry-top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+  .entry-date { font-size: 12.5px; color: var(--ink-soft); font-variant-numeric: tabular-nums; font-family: "IBM Plex Mono", monospace; }
+  .entry-body { margin-top: 6px; display: flex; flex-wrap: wrap; gap: 5px; }
+  .entry-note { margin-top: 6px; font-size: 13px; color: var(--ink-soft); font-style: italic; overflow-wrap: anywhere; }
+  .entry-actions { display: flex; flex-direction: column; gap: 3px; flex: none; }
+  .icon-btn {
+    border: 0; background: transparent; color: var(--ink-faint); cursor: pointer;
+    border-radius: 8px; padding: 6px 8px; font-size: 12px; font-weight: 700; min-height: 32px;
+  }
+  .icon-btn:hover { background: var(--surface-2); color: var(--ink); }
+  .icon-btn.del:hover { color: var(--danger); }
+
+  .tag {
+    display: inline-flex; align-items: center; font-size: 12px; font-weight: 700;
+    border-radius: 7px; padding: 3px 8px; background: var(--surface-2); color: var(--ink-soft); white-space: nowrap;
+  }
+  .tag.boy { background: var(--boy-soft); color: var(--boy-ink); }
+  .tag.girl { background: var(--girl-soft); color: var(--girl-ink); }
+  .tag.unknown { background: var(--unknown-soft); color: var(--unknown); }
+  .tag.still { background: var(--still-soft); color: var(--still); }
+  .tag.nicu { background: var(--nicu-soft); color: var(--nicu); }
+  .tag.demo { background: var(--accent-soft); color: var(--accent-deep); }
+  .tag.plain { background: transparent; border: 1px solid var(--line); color: var(--ink-soft); font-weight: 600; }
+
+  .empty {
+    border: 1px dashed var(--line-strong); border-radius: var(--radius);
+    padding: 30px 20px; text-align: center; color: var(--ink-faint); font-size: 13.5px;
+  }
+  .empty strong { display: block; color: var(--ink-soft); font-size: 15px; margin-bottom: 4px; }
+
+  /* ================= tabel ================= */
+
+  .table-wrap { overflow-x: auto; }
+  table.years { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; min-width: 500px; }
+  table.years th, table.years td { text-align: right; padding: 9px 10px; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  table.years th { font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-faint); font-weight: 700; }
+  table.years th:first-child, table.years td:first-child { text-align: left; }
+  table.years td:first-child { font-family: "IBM Plex Mono", monospace; font-weight: 600; }
+  table.years tbody tr { cursor: pointer; }
+  table.years tbody tr:hover td { background: var(--surface-2); }
+  table.years tr.total td { border-bottom: 0; border-top: 2px solid var(--line-strong); font-weight: 700; }
+
+  /* ================= banner ================= */
+
+  .banner {
+    display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px;
+    background: var(--accent-soft); border-radius: var(--radius-s);
+    padding: 10px 12px; font-size: 13px; margin-bottom: 10px;
+  }
+  .banner .grow { flex: 1; min-width: 180px; }
+  .banner.warn { background: var(--nicu-soft); }
+
+  /* ================= sheet / dialoog ================= */
+
+  dialog {
+    border: 1px solid var(--line-strong); border-radius: 18px; background: var(--surface); color: var(--ink);
+    padding: 0; width: min(520px, calc(100vw - 24px)); max-height: 88vh; box-shadow: var(--shadow);
+  }
+  dialog::backdrop { background: rgba(18, 12, 20, .5); backdrop-filter: blur(2px); }
+  dialog form { display: flex; flex-direction: column; max-height: inherit; }
+
+  @media (max-width: 620px) {
+    dialog {
+      width: 100%; max-width: 100%; margin: 0; border-radius: 20px 20px 0 0;
+      position: fixed; left: 0; right: 0; bottom: 0; top: auto; max-height: 92vh; border-bottom: 0;
+    }
+    dialog[open] { animation: sheet .22s ease both; }
+    @keyframes sheet { from { transform: translateY(24px); opacity: .6; } to { transform: none; opacity: 1; } }
+  }
+
+  .dlg-head { padding: 14px 18px 10px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--line); }
+  .dlg-head h3 { font-size: 18px; margin-right: auto; }
+  .dlg-body { padding: 14px 18px; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+  .dlg-foot {
+    padding: 12px 18px calc(12px + env(safe-area-inset-bottom, 0px));
+    border-top: 1px solid var(--line); display: flex; gap: 10px; background: var(--surface-2);
+  }
+  .dlg-foot .btn { flex: 1; min-height: 48px; }
+
+  #setBody .card {
+    border: 0; border-radius: 0; background: transparent;
+    padding: 0 0 15px; margin: 0 0 15px; border-bottom: 1px solid var(--line);
+  }
+  #setBody .card:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
+
+  .req-label { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
+  .req-label .eyebrow { margin-right: auto; }
+  .req-label .req { font-size: 11px; font-weight: 700; color: var(--accent-deep); }
+
+  .sexpick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .sexpick button {
+    min-height: 60px; border-radius: 12px; border: 2px solid var(--line);
+    background: var(--surface); cursor: pointer; font-weight: 700; font-size: 16px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    transition: transform .1s ease, border-color .15s ease, background .15s ease;
+  }
+  .sexpick button:active { transform: scale(.97); }
+  .sexpick button .sub { font-size: 11px; font-weight: 600; color: var(--ink-faint); }
+  .sexpick button[aria-pressed="true"][data-sex="jongen"] { border-color: var(--boy); background: var(--boy-soft); color: var(--boy-ink); }
+  .sexpick button[aria-pressed="true"][data-sex="meisje"] { border-color: var(--girl); background: var(--girl-soft); color: var(--girl-ink); }
+
+  .chiprow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip {
+    border: 1px solid var(--line-strong); background: var(--surface); color: var(--ink-soft);
+    border-radius: 999px; padding: 8px 13px; font-size: 13.5px; font-weight: 600; cursor: pointer; min-height: 40px;
+  }
+  .chip[aria-pressed="true"] { background: var(--still-soft); border-color: var(--still); color: var(--still); }
+
+  details.more { margin-top: 14px; border-top: 1px solid var(--line); padding-top: 12px; }
+  details.more > summary {
+    cursor: pointer; font-weight: 700; font-size: 14px; color: var(--accent-deep);
+    list-style: none; display: flex; align-items: center; gap: 7px; padding: 6px 0; min-height: 36px;
+  }
+  details.more > summary::-webkit-details-marker { display: none; }
+  details.more > summary::before {
+    content: ""; width: 7px; height: 7px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor;
+    transform: rotate(45deg); transition: transform .18s ease; margin-right: 2px;
+  }
+  details.more[open] > summary::before { transform: rotate(225deg) translate(-2px, -2px); }
+
+  .field { display: flex; flex-direction: column; gap: 5px; margin-top: 12px; }
+  .field > label { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
+  .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .hint { font-size: 11.5px; color: var(--ink-faint); font-weight: 500; }
+
+  .baby-card { border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; margin-top: 10px; background: var(--surface-2); }
+  .baby-card .bhead { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  .baby-card .bhead .eyebrow { margin-right: auto; }
+  .baby-card .sexpick button { min-height: 46px; font-size: 14px; }
+
+  #toast {
+    position: fixed; left: 50%; bottom: calc(86px + env(safe-area-inset-bottom, 0px));
+    transform: translateX(-50%) translateY(10px);
+    background: var(--ink); color: var(--ground); padding: 10px 16px; border-radius: 999px;
+    font-size: 13.5px; font-weight: 700; opacity: 0; pointer-events: none;
+    transition: opacity .2s ease, transform .2s ease; z-index: 60; max-width: calc(100vw - 32px); text-align: center;
+  }
+  #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  .datarow { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .datarow .btn { flex: 1 1 140px; }
+
+  /* ================= gsm ================= */
+  @media (max-width: 520px) {
+    :root { --bar-h: 56px; }
+
+    .shell { padding-inline: 14px; }
+    .top-row { padding: 8px 0 6px; gap: 8px; }
+    .top-row h1 { font-size: 17px; }
+    .year-pick { height: 34px; padding: 0 26px 0 11px; }
+    .year-pick .val { font-size: 13.5px; }
+    .menu-btn { width: 36px; height: 36px; }
+    nav.tabs { gap: 2px; padding-bottom: 6px; }
+    nav.tabs button { font-size: 13px; padding: 10px; min-height: 40px; }
+    nav.tabs button .n { margin-left: 4px; font-size: 11px; }
+    nav.tabs .lbl-long { display: none; }
+    nav.tabs .lbl-short { display: inline; }
+    main { padding-block: 10px 0; }
+
+    .hero { padding: 13px 14px; gap: 10px; border-radius: 12px; }
+    .hero .big { font-size: 44px; }
+    .hero .big-label { font-size: 12.5px; }
+    .hero .side { gap: 13px; }
+    .hero .side .v { font-size: 19px; }
+    .hero .side .l { font-size: 10px; }
+    .hero::after { width: 150px; height: 150px; right: -44px; top: -62px; }
+
+    .grid2, .grid3 { gap: 8px; margin-top: 8px; }
+    .stat { padding: 9px 10px; border-radius: 10px; }
+    .stat .l { font-size: 11px; }
+    .stat .v { font-size: 21px; }
+    .stat .f { font-size: 10.5px; }
+
+    .card { padding: 12px 13px; margin-top: 8px; border-radius: 12px; }
+    .card > .ch { margin-bottom: 9px; }
+    .card > .ch h2 { font-size: 15.5px; }
+    .card > .ch .note { font-size: 11px; }
+
+    .prop { height: 13px; }
+    .prop-legend { gap: 6px 14px; margin-top: 9px; }
+    .prop-legend .it { font-size: 12.5px; }
+
+    .months .cnt { font-size: 10px; height: 12px; }
+    .month-axis span { font-size: 10px; }
+
+    .banner { font-size: 12.5px; padding: 9px 10px; gap: 6px 8px; margin-bottom: 8px; }
+    .banner .grow { min-width: 140px; }
+
+    ul.entries { gap: 6px; }
+    ul.entries li { padding: 10px; gap: 8px; }
+    .entry-actions { flex-direction: row; }
+
+    table.years th, table.years td { padding: 8px 8px; font-size: 13px; }
+
+    .btn.small { min-height: 40px; }
+    .dlg-head .icon-btn { min-height: 40px; min-width: 40px; }
+    .dlg-body { padding: 13px 16px; }
+    details.more > summary { min-height: 44px; }
+    .icon-btn { min-height: 38px; }
+
+    .pad-bottom { height: calc(86px + env(safe-area-inset-bottom, 0px)); }
+    .actionbar { padding: 8px 14px calc(8px + env(safe-area-inset-bottom, 0px)); }
+    .actionbar button { min-height: 46px; font-size: 14px; }
+    #toast { bottom: calc(78px + env(safe-area-inset-bottom, 0px)); }
+  }
+
+  @media (max-width: 400px) {
+    nav.tabs button { font-size: 12px; padding: 10px 8px; }
+    nav.tabs button .n { display: none; }
+    .top-row h1 { font-size: 16px; }
+    .shell { padding-inline: 12px; }
+  }
+
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="shell">
+    <div class="top-row">
+      <h1>Geboorteregister</h1>
+      <span class="year-pick">
+        <span class="val" id="yearVal">2026</span>
+        <select id="yearSelect" aria-label="Jaar kiezen"></select>
+      </span>
+      <button class="menu-btn" id="menuBtn" type="button" aria-label="Instellingen">
+        <i></i><i></i><i></i>
+        <span class="badge" id="storageDot" hidden></span>
+      </button>
+    </div>
+    <nav class="tabs" role="tablist" aria-label="Secties">
+      <button role="tab" id="tab-overzicht" aria-selected="true" data-tab="overzicht">Overzicht</button>
+      <button role="tab" id="tab-bevallingen" aria-selected="false" data-tab="bevallingen">Bevallingen<span class="n" id="tabBevN"></span></button>
+      <button role="tab" id="tab-nicu" aria-selected="false" data-tab="nicu">NICU<span class="n" id="tabNicuN"></span></button>
+      <button role="tab" id="tab-jaren" aria-selected="false" data-tab="jaren"><span class="lbl-long">Per jaar</span><span class="lbl-short">Jaren</span></button>
+    </nav>
+  </div>
+</header>
+
+<main class="shell">
+  <div class="banner" id="demoBanner" hidden>
+    <span class="grow"><strong>Voorbeeld.</strong> Verdwijnt bij je eerste eigen registratie.</span>
+    <button class="btn small" id="hideDemo" type="button">Verbergen</button>
+  </div>
+  <div id="pane"></div>
+  <div class="pad-bottom"></div>
+</main>
+
+<div class="actionbar">
+  <div class="inner">
+    <button class="btn primary" id="addBev" type="button">+ Bevalling</button>
+    <button class="btn nicu" id="addNicu" type="button">+ NICU-kindje</button>
+  </div>
+</div>
+
+<dialog id="setDialog" aria-labelledby="setDlgTitle">
+  <form method="dialog">
+    <div class="dlg-head">
+      <h3 id="setDlgTitle">Instellingen</h3>
+      <button class="icon-btn" type="button" data-close="setDialog" aria-label="Sluiten">✕</button>
+    </div>
+    <div class="dlg-body" id="setBody"></div>
+    <div class="dlg-foot">
+      <button class="btn primary" type="button" data-close="setDialog">Sluiten</button>
+    </div>
+  </form>
+</dialog>
+
+<input type="file" id="importFile" accept="application/json,.json" hidden>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<!-- ============ bevalling ============ -->
+<dialog id="bevDialog" aria-labelledby="bevDlgTitle">
+  <form method="dialog">
+    <div class="dlg-head">
+      <h3 id="bevDlgTitle">Bevalling</h3>
+      <button class="icon-btn" type="button" data-close="bevDialog" aria-label="Sluiten">✕</button>
+    </div>
+    <div class="dlg-body">
+      <div class="req-label">
+        <span class="eyebrow">Het kindje</span>
+        <span class="req">verplicht</span>
+      </div>
+      <div class="sexpick" id="bevSex">
+        <button type="button" data-sex="jongen" aria-pressed="false">Jongen</button>
+        <button type="button" data-sex="meisje" aria-pressed="false">Meisje</button>
+      </div>
+      <div class="chiprow">
+        <button type="button" class="chip" id="bevStil" aria-pressed="false">Stilgeboren</button>
+      </div>
+
+      <details class="more" id="bevMore">
+        <summary>Meer invullen <span class="hint">(allemaal optioneel)</span></summary>
+
+        <div class="field">
+          <label for="bevDatum">Datum <span class="hint">— standaard vandaag</span></label>
+          <input type="date" id="bevDatum">
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="bevPlaats">Plaats</label>
+            <select id="bevPlaats">
+              <option value="">—</option>
+              <option>Thuis</option>
+              <option>Geboortehuis</option>
+              <option>Ziekenhuis</option>
+              <option>Onderweg</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="bevWijze">Verloop</label>
+            <select id="bevWijze">
+              <option value="">—</option>
+              <option>Spontaan vaginaal</option>
+              <option>Vacuüm of forceps</option>
+              <option>Keizersnede</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="row3">
+          <div class="field">
+            <label for="bevWeken">Weken</label>
+            <input type="number" id="bevWeken" min="20" max="45" step="1" inputmode="numeric" placeholder="39">
+          </div>
+          <div class="field">
+            <label for="bevDagen">Dagen</label>
+            <input type="number" id="bevDagen" min="0" max="6" step="1" inputmode="numeric" placeholder="0–6">
+          </div>
+          <div class="field">
+            <label for="bevGewicht">Gewicht (g)</label>
+            <input type="number" id="bevGewicht" min="200" max="7000" step="5" inputmode="numeric" placeholder="3240">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="bevNaam">Roepnaam</label>
+          <input type="text" id="bevNaam" maxlength="40" placeholder="optioneel">
+        </div>
+
+        <div class="field">
+          <label for="bevNotitie">Notitie</label>
+          <textarea id="bevNotitie" placeholder="Wat je wil onthouden"></textarea>
+        </div>
+
+        <div id="babyList"></div>
+        <button class="btn small" type="button" id="addBaby" style="margin-top:10px">+ Nog een kindje (meerling)</button>
+      </details>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn" type="button" data-close="bevDialog">Annuleren</button>
+      <button class="btn primary" type="button" id="bevSave" disabled>Opslaan</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- ============ NICU ============ -->
+<dialog id="nicuDialog" aria-labelledby="nicuDlgTitle">
+  <form method="dialog">
+    <div class="dlg-head">
+      <h3 id="nicuDlgTitle">NICU-kindje</h3>
+      <button class="icon-btn" type="button" data-close="nicuDialog" aria-label="Sluiten">✕</button>
+    </div>
+    <div class="dlg-body">
+      <div class="req-label">
+        <span class="eyebrow">Het kindje</span>
+        <span class="req">verplicht</span>
+      </div>
+      <div class="sexpick" id="nicuSex">
+        <button type="button" data-sex="jongen" aria-pressed="false">Jongen</button>
+        <button type="button" data-sex="meisje" aria-pressed="false">Meisje</button>
+      </div>
+
+      <details class="more" id="nicuMore">
+        <summary>Meer invullen <span class="hint">(allemaal optioneel)</span></summary>
+
+        <div class="field">
+          <label for="nicuDatum">Eerste dag van de zorg <span class="hint">— standaard vandaag</span></label>
+          <input type="date" id="nicuDatum">
+        </div>
+
+        <div class="row3">
+          <div class="field">
+            <label for="nicuWeken">Weken</label>
+            <input type="number" id="nicuWeken" min="20" max="45" step="1" inputmode="numeric" placeholder="32">
+          </div>
+          <div class="field">
+            <label for="nicuDagen">Dagen</label>
+            <input type="number" id="nicuDagen" min="0" max="6" step="1" inputmode="numeric" placeholder="0–6">
+          </div>
+          <div class="field">
+            <label for="nicuGewicht">Gewicht (g)</label>
+            <input type="number" id="nicuGewicht" min="200" max="7000" step="5" inputmode="numeric" placeholder="1840">
+          </div>
+        </div>
+
+        <div class="row2">
+          <div class="field">
+            <label for="nicuReden">Reden van opname</label>
+            <select id="nicuReden">
+              <option value="">—</option>
+              <option>Vroeggeboorte</option>
+              <option>Laag geboortegewicht</option>
+              <option>Ademhalingsondersteuning</option>
+              <option>Infectie</option>
+              <option>Geelzucht</option>
+              <option>Voedingsproblemen</option>
+              <option>Observatie</option>
+              <option>Anders</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="nicuDuur">Dagen zorg</label>
+            <input type="number" id="nicuDuur" min="1" max="400" step="1" inputmode="numeric" placeholder="12">
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="nicuNaam">Roepnaam of initialen</label>
+          <input type="text" id="nicuNaam" maxlength="40" placeholder="optioneel">
+        </div>
+
+        <div class="field">
+          <label for="nicuNotitie">Notitie</label>
+          <textarea id="nicuNotitie" placeholder="Wat je van dit kindje wil onthouden"></textarea>
+        </div>
+      </details>
+    </div>
+    <div class="dlg-foot">
+      <button class="btn" type="button" data-close="nicuDialog">Annuleren</button>
+      <button class="btn nicu" type="button" id="nicuSave" disabled>Opslaan</button>
+    </div>
+  </form>
+</dialog>
+
+<script>
+(function () {
+  "use strict";
+
+  /* =========================================================
+     Model
+     bevalling: { id, datum, plaats, weken, dagen, wijze, notitie,
+                  babys: [{ geslacht, uitkomst, gewicht, naam }] }
+     nicu:      { id, datum, geslacht, weken, dagen, gewicht,
+                  reden, duur, naam, notitie }
+     Enkel het geslacht is verplicht; al de rest mag leeg blijven.
+     ========================================================= */
+
+  var LS_KEY = "geboorteregister.v1";
+  var state = {
+    bevallingen: [], nicu: [],
+    year: String(new Date().getFullYear()),
+    tab: "overzicht",
+    mode: "loading", loaded: false, demoHidden: false, backupHidden: false, editing: null
+  };
+
+  var MAAND = ["jan", "feb", "mrt", "apr", "mei", "jun", "jul", "aug", "sep", "okt", "nov", "dec"];
+  var MAAND_KORT = ["J", "F", "M", "A", "M", "J", "J", "A", "S", "O", "N", "D"];
+
+  function $(id) { return document.getElementById(id); }
+  function el(tag, cls, text) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (text != null) e.textContent = text;
+    return e;
+  }
+  function uid4() {
+    if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+    return "r" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+  }
+  function today() { return new Date().toISOString().slice(0, 10); }
+  function yearOf(r) { return (r.datum || "").slice(0, 4); }
+  function monthOf(r) { return parseInt((r.datum || "").slice(5, 7), 10) - 1; }
+  function num(v) { var n = parseInt(v, 10); return isNaN(n) ? null : n; }
+  function fmtDate(iso) {
+    if (!iso || iso.length < 10) return "—";
+    var p = iso.split("-");
+    return parseInt(p[2], 10) + " " + MAAND[parseInt(p[1], 10) - 1] + " " + p[0];
+  }
+  function fmtZwanger(w, d) { return w == null ? null : w + (d ? "+" + d : "") + " weken"; }
+  function toast(msg) {
+    var t = $("toast");
+    t.textContent = msg; t.classList.add("show");
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () { t.classList.remove("show"); }, 2600);
+  }
+
+  /* ---------------- voorbeeld ---------------- */
+
+  function demoData() {
+    var y = new Date().getFullYear();
+    function d(m, day) { return y + "-" + String(m).padStart(2, "0") + "-" + String(day).padStart(2, "0"); }
+    return {
+      bevallingen: [
+        { id: "demo-b1", _demo: true, datum: d(6, 14), plaats: "Thuis", weken: 39, dagen: 2, wijze: "Spontaan vaginaal", notitie: "Waterbevalling, vlot verlopen.", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3240, naam: "" }] },
+        { id: "demo-b2", _demo: true, datum: d(4, 2), plaats: "Ziekenhuis", weken: 36, dagen: 0, wijze: "Keizersnede", notitie: "", babys: [{ geslacht: "jongen", uitkomst: "levend", gewicht: 2510, naam: "" }, { geslacht: "jongen", uitkomst: "levend", gewicht: 2380, naam: "" }] },
+        { id: "demo-b3", _demo: true, datum: d(2, 21), plaats: "Ziekenhuis", weken: 38, dagen: 4, wijze: "", notitie: "", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3510, naam: "" }] },
+        { id: "demo-b4", _demo: true, datum: d(1, 9), plaats: "", weken: null, dagen: null, wijze: "", notitie: "", babys: [{ geslacht: "jongen", uitkomst: "levend", gewicht: null, naam: "" }] }
+      ],
+      nicu: [
+        { id: "demo-n1", _demo: true, datum: d(4, 2), geslacht: "jongen", weken: 36, dagen: 0, gewicht: 2380, reden: "Laag geboortegewicht", duur: 9, naam: "", notitie: "Tweede van de tweeling." },
+        { id: "demo-n2", _demo: true, datum: d(3, 11), geslacht: "meisje", weken: 30, dagen: 5, gewicht: 1420, reden: "Vroeggeboorte", duur: 41, naam: "", notitie: "" }
+      ]
+    };
+  }
+  function isEmptyRegister() { return state.bevallingen.length === 0 && state.nicu.length === 0; }
+  function showingDemo() { return state.loaded && isEmptyRegister() && !state.demoHidden; }
+  function viewData() { return showingDemo() ? demoData() : { bevallingen: state.bevallingen, nicu: state.nicu }; }
+
+  /* ---------------- statistiek ---------------- */
+
+  function statsFor(bevs, nicus) {
+    var s = { bevallingen: bevs.length, babys: 0, jongens: 0, meisjes: 0, onbekend: 0, levend: 0, stil: 0, meerlingen: 0, nicu: nicus.length, nicuDagen: 0 };
+    bevs.forEach(function (b) {
+      var ks = b.babys || [];
+      s.babys += ks.length;
+      if (ks.length > 1) s.meerlingen++;
+      ks.forEach(function (k) {
+        if (k.geslacht === "jongen") s.jongens++;
+        else if (k.geslacht === "meisje") s.meisjes++;
+        else s.onbekend++;
+        if (k.uitkomst === "stilgeboren") s.stil++; else s.levend++;
+      });
+    });
+    nicus.forEach(function (n) { if (n.duur) s.nicuDagen += n.duur; });
+    return s;
+  }
+  function filterYear(list, y) { return y === "all" ? list.slice() : list.filter(function (r) { return yearOf(r) === y; }); }
+  function byDateDesc(a, b) { return (b.datum || "").localeCompare(a.datum || ""); }
+  function allYears(data) {
+    var set = {};
+    data.bevallingen.concat(data.nicu).forEach(function (r) { var y = yearOf(r); if (y) set[y] = true; });
+    set[String(new Date().getFullYear())] = true;
+    return Object.keys(set).sort(function (a, b) { return b.localeCompare(a); });
+  }
+
+  /* =========================================================
+     Opslag — in de browser van dit toestel. De registraties
+     verlaten het toestel niet, dus niemand anders ziet ze.
+     ========================================================= */
+
+  var BACKUP_KEY = "geboorteregister.backup";
+  var storageOk = true;
+
+  function storageInfoText() {
+    if (!storageOk) {
+      return "Deze browser laat niet toe om iets te bewaren — bijvoorbeeld in een privévenster of met geblokkeerde sitegegevens. Wat je nu invult, is weg zodra je de pagina sluit. Open de app in een gewoon venster, of exporteer een back-up voor je afsluit.";
+    }
+    return "Je registraties worden bewaard in de browser van dit toestel. Ze blijven staan als je de app sluit, en niemand anders kan ze zien — ook niet wie de app met je deelde. Ze reizen niet mee naar een ander toestel, en ze verdwijnen als je de sitegegevens van je browser wist. Maak daarom af en toe een back-up.";
+  }
+  function setStorageUI() {
+    $("storageDot").hidden = storageOk;
+    $("menuBtn").title = storageOk ? "Instellingen" : "Opgelet: deze browser bewaart niets";
+  }
+
+  function readLocal() {
+    try {
+      var raw = localStorage.getItem(LS_KEY);
+      if (raw) {
+        var p = JSON.parse(raw);
+        return { bevallingen: Array.isArray(p.bevallingen) ? p.bevallingen : [], nicu: Array.isArray(p.nicu) ? p.nicu : [] };
+      }
+    } catch (e) { storageOk = false; }
+    return { bevallingen: [], nicu: [] };
+  }
+  function saveLocal() {
+    try {
+      localStorage.setItem(LS_KEY, JSON.stringify({ bevallingen: state.bevallingen, nicu: state.nicu, v: 1 }));
+      storageOk = true;
+      return true;
+    } catch (e) { storageOk = false; return false; }
+  }
+
+  function lastBackup() { try { return localStorage.getItem(BACKUP_KEY) || ""; } catch (e) { return ""; } }
+  function markBackup() { try { localStorage.setItem(BACKUP_KEY, today()); } catch (e) {} }
+  function daysSinceBackup() {
+    var b = lastBackup();
+    if (!b) return null;
+    var d = (Date.parse(today()) - Date.parse(b)) / 86400000;
+    return isNaN(d) ? null : Math.round(d);
+  }
+  function backupDue() {
+    if (!storageOk || isEmptyRegister() || state.backupHidden) return false;
+    var d = daysSinceBackup();
+    if (d === null) return state.bevallingen.length + state.nicu.length >= 10;
+    return d >= 60;
+  }
+
+  function askPersist() {
+    try {
+      if (navigator.storage && navigator.storage.persist) navigator.storage.persist();
+    } catch (e) {}
+  }
+  function backupLine() {
+    var b = lastBackup();
+    if (!b) return "Nog geen back-up gemaakt.";
+    var d = daysSinceBackup();
+    return "Laatste back-up: " + fmtDate(b) + (d === 0 ? " (vandaag)" : d === 1 ? " (gisteren)" : " (" + d + " dagen geleden)") + ".";
+  }
+
+  function fillPersistNote(node) {
+    node.textContent = "";
+    try {
+      if (navigator.storage && navigator.storage.persisted) {
+        navigator.storage.persisted().then(function (ok) {
+          node.textContent = ok ? "Deze browser heeft de opslag als blijvend gemarkeerd — ze wordt niet vanzelf opgeruimd." : "";
+        }, function () {});
+      }
+    } catch (e) {}
+  }
+
+  var installPrompt = null;
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    installPrompt = e;
+    if ($("setDialog").open) fillSettings();
+  });
+  function isStandalone() {
+    try {
+      if (window.navigator.standalone) return true;
+      return window.matchMedia("(display-mode: standalone)").matches ||
+             window.matchMedia("(display-mode: fullscreen)").matches ||
+             window.matchMedia("(display-mode: minimal-ui)").matches;
+    } catch (e) { return false; }
+  }
+  function isFramed() {
+    try { return window.top !== window.self; } catch (e) { return true; }
+  }
+
+  function appLink() {
+    try { if (window.top === window.self && /^https?:/.test(location.href)) return location.href; } catch (e) {}
+    try {
+      var r = document.referrer || "";
+      if (/^https:\/\/claude\.ai\/.+/.test(r)) return r;
+    } catch (e) {}
+    return null;
+  }
+
+  function saveAll() {
+    if (!saveLocal()) {
+      setStorageUI();
+      toast("Deze browser bewaart niets — exporteer een back-up");
+      return;
+    }
+    if (!persistAsked) { persistAsked = true; askPersist(); }
+  }
+
+  function initStorage() {
+    try {
+      localStorage.setItem("geboorteregister.test", "1");
+      localStorage.removeItem("geboorteregister.test");
+    } catch (e) { storageOk = false; }
+
+    var local = readLocal();
+    state.bevallingen = local.bevallingen;
+    state.nicu = local.nicu;
+    state.loaded = true;
+    state.mode = "local";
+
+    setStorageUI();
+    render();
+  }
+
+  /* =========================================================
+     Weergave — onderdelen
+     ========================================================= */
+
+  function statBox(label, value, foot, tint, tintSoft) {
+    var d = el("div", "stat" + (tintSoft ? " tint" : ""));
+    if (tint) d.style.setProperty("--tint", tint);
+    if (tintSoft) d.style.setProperty("--tint-soft", tintSoft);
+    d.appendChild(el("span", "l", label));
+    d.appendChild(el("span", "v", String(value)));
+    if (foot) d.appendChild(el("span", "f", foot));
+    return d;
+  }
+
+  function propBar(s) {
+    var card = el("div", "card");
+    var ch = el("div", "ch");
+    ch.appendChild(el("h2", null, "Jongens en meisjes"));
+    ch.appendChild(el("span", "note", s.babys ? s.babys + " kindjes" : "nog geen kindjes"));
+    card.appendChild(ch);
+
+    var total = s.jongens + s.meisjes + s.onbekend;
+    var bar = el("div", "prop");
+    if (!total) {
+      var e = el("span", "p-unknown");
+      e.style.flex = "1";
+      bar.appendChild(e);
+    } else {
+      [["p-boy", s.jongens], ["p-girl", s.meisjes], ["p-unknown", s.onbekend]].forEach(function (p) {
+        if (!p[1]) return;
+        var seg = el("span", p[0]);
+        seg.style.flex = p[1];
+        bar.appendChild(seg);
+      });
+    }
+    card.appendChild(bar);
+
+    var lg = el("div", "prop-legend");
+    function item(color, name, n) {
+      if (!n && name === "Niet genoteerd") return;
+      var it = el("div", "it");
+      var sw = el("span", "sw");
+      sw.style.background = color;
+      it.appendChild(sw);
+      it.appendChild(el("span", null, name));
+      it.appendChild(el("span", "num", String(n)));
+      if (total) it.appendChild(el("span", "pct", Math.round(n / total * 100) + "%"));
+      lg.appendChild(it);
+    }
+    item("var(--boy)", "Jongens", s.jongens);
+    item("var(--girl)", "Meisjes", s.meisjes);
+    item("var(--unknown)", "Niet genoteerd", s.onbekend);
+    card.appendChild(lg);
+    return card;
+  }
+
+  function monthChart(bevs, year) {
+    var card = el("div", "card");
+    var ch = el("div", "ch");
+    ch.appendChild(el("h2", null, "Bevallingen per maand"));
+    ch.appendChild(el("span", "note", year === "all" ? "alle jaren samen" : year));
+    card.appendChild(ch);
+
+    var counts = [0,0,0,0,0,0,0,0,0,0,0,0];
+    bevs.forEach(function (b) { var m = monthOf(b); if (m >= 0 && m < 12) counts[m]++; });
+    var max = Math.max.apply(null, counts) || 1;
+
+    var row = el("div", "months");
+    counts.forEach(function (n, i) {
+      var m = el("div", "m");
+      m.appendChild(el("span", "cnt", n ? String(n) : ""));
+      var bar = el("div", "bar" + (n ? "" : " zero"));
+      bar.style.height = n ? Math.max(6, Math.round(n / max * 100)) + "%" : "3px";
+      bar.style.animationDelay = (i * 18) + "ms";
+      m.appendChild(bar);
+      m.title = MAAND[i] + ": " + n + (n === 1 ? " bevalling" : " bevallingen");
+      row.appendChild(m);
+    });
+    card.appendChild(row);
+
+    var ax = el("div", "month-axis");
+    MAAND_KORT.forEach(function (l) { ax.appendChild(el("span", null, l)); });
+    card.appendChild(ax);
+    return card;
+  }
+
+  /* ---------------- panelen ---------------- */
+
+  function paneOverzicht(data) {
+    var y = state.year;
+    var sel = statsFor(filterYear(data.bevallingen, y), filterYear(data.nicu, y));
+    var all = statsFor(data.bevallingen, data.nicu);
+    var wrap = el("div", "pane");
+
+    if (!storageOk) {
+      var nb = el("div", "banner warn");
+      nb.appendChild(el("span", "grow", "Deze browser bewaart niets. Wat je invult, is weg zodra je de pagina sluit."));
+      var more = el("button", "btn small", "Waarom?");
+      more.type = "button";
+      more.addEventListener("click", openSettings);
+      nb.appendChild(more);
+      wrap.appendChild(nb);
+    } else if (backupDue()) {
+      var bb = el("div", "banner");
+      var d = daysSinceBackup();
+      bb.appendChild(el("span", "grow", d === null
+        ? "Je registraties staan enkel op dit toestel. Eén back-up beschermt ze tegen een nieuw toestel of een browser die opgekuist wordt."
+        : "Je laatste back-up is " + d + " dagen oud."));
+      var later = el("button", "btn small ghost", "Later");
+      later.type = "button";
+      later.addEventListener("click", function () { state.backupHidden = true; render(); });
+      bb.appendChild(later);
+      var bbtn = el("button", "btn small", "Back-up maken");
+      bbtn.type = "button";
+      bbtn.addEventListener("click", exportJson);
+      bb.appendChild(bbtn);
+      wrap.appendChild(bb);
+    }
+
+    var hero = el("div", "hero");
+    var left = el("div");
+    left.appendChild(el("div", "eyebrow", y === "all" ? "Alle jaren" : "Jaar " + y));
+    left.appendChild(el("div", "big", String(sel.bevallingen)));
+    left.appendChild(el("div", "big-label", sel.bevallingen === 1 ? "bevalling begeleid" : "bevallingen begeleid"));
+    hero.appendChild(left);
+
+    var side = el("div", "side");
+    function s2(v, l) {
+      var d = el("div");
+      d.appendChild(el("div", "v", String(v)));
+      d.appendChild(el("div", "l", l));
+      return d;
+    }
+    side.appendChild(s2(sel.babys, "baby's"));
+    side.appendChild(s2(sel.nicu, "NICU"));
+    if (y !== "all") side.appendChild(s2(all.bevallingen, "totaal"));
+    hero.appendChild(side);
+    wrap.appendChild(hero);
+
+    var g = el("div", "grid3");
+    g.appendChild(statBox("Levend geboren", sel.levend, null, "var(--ok)", "var(--ok-soft)"));
+    g.appendChild(statBox("Stilgeboren", sel.stil, null, "var(--still)", "var(--still-soft)"));
+    g.appendChild(statBox("Meerlingen", sel.meerlingen, null, "var(--accent-deep)", "var(--accent-soft)"));
+    wrap.appendChild(g);
+
+    wrap.appendChild(propBar(sel));
+
+    var g2 = el("div", "grid2");
+    g2.appendChild(statBox("NICU-kindjes", sel.nicu, y === "all" ? null : "totaal ooit: " + all.nicu, "var(--nicu)", "var(--nicu-soft)"));
+    g2.appendChild(statBox("Dagen NICU-zorg", sel.nicuDagen, "in deze periode genoteerd", "var(--nicu)", "var(--nicu-soft)"));
+    wrap.appendChild(g2);
+
+    wrap.appendChild(monthChart(filterYear(data.bevallingen, y), y));
+    return wrap;
+  }
+
+  function tagEl(text, cls) { return el("span", "tag " + (cls || ""), text); }
+  function sexTag(g) {
+    if (g === "jongen") return tagEl("Jongen", "boy");
+    if (g === "meisje") return tagEl("Meisje", "girl");
+    return tagEl("Niet genoteerd", "unknown");
+  }
+
+  function entryShell(rec, type, edgeColor) {
+    var li = el("li", "rec");
+    li.style.setProperty("--edge", edgeColor);
+    var main = el("div", "entry-main");
+    var top = el("div", "entry-top");
+    top.appendChild(el("span", "entry-date", fmtDate(rec.datum)));
+    if (rec._demo) top.appendChild(tagEl("voorbeeld", "demo"));
+    main.appendChild(top);
+    li.appendChild(main);
+
+    var act = el("div", "entry-actions");
+    if (!rec._demo) {
+      var edit = el("button", "icon-btn", "Bewerk");
+      edit.type = "button";
+      edit.addEventListener("click", function () { openEditor(type, rec.id); });
+      var del = el("button", "icon-btn del", "Wis");
+      del.type = "button";
+      del.setAttribute("aria-label", "Registratie van " + fmtDate(rec.datum) + " wissen");
+      var armed = false, timer = null;
+      del.addEventListener("click", function () {
+        if (!armed) {
+          armed = true; del.textContent = "Zeker?"; del.style.color = "var(--danger)";
+          clearTimeout(timer);
+          timer = setTimeout(function () { armed = false; del.textContent = "Wis"; del.style.color = ""; }, 5000);
+          return;
+        }
+        clearTimeout(timer);
+        removeRecord(type, rec.id);
+      });
+      act.appendChild(edit); act.appendChild(del);
+    }
+    li.appendChild(act);
+    return { li: li, main: main, top: top };
+  }
+
+  function bevEdge(rec) {
+    var ks = rec.babys || [];
+    if (ks.some(function (k) { return k.uitkomst === "stilgeboren"; })) return "var(--still)";
+    if (ks.length && ks.every(function (k) { return k.geslacht === "jongen"; })) return "var(--boy)";
+    if (ks.length && ks.every(function (k) { return k.geslacht === "meisje"; })) return "var(--girl)";
+    return "var(--accent)";
+  }
+
+  function listBevallingen(list) {
+    var ul = el("ul", "entries");
+    list.forEach(function (rec) {
+      var sh = entryShell(rec, "bevalling", bevEdge(rec));
+      var naam = (rec.babys || []).map(function (k) { return k.naam; }).filter(Boolean).join(" & ");
+      if (naam) {
+        var nm = el("span", null, naam);
+        nm.style.fontWeight = "700";
+        sh.top.insertBefore(nm, sh.top.firstChild);
+      }
+      var body = el("div", "entry-body");
+      (rec.babys || []).forEach(function (k) {
+        body.appendChild(sexTag(k.geslacht));
+        if (k.uitkomst === "stilgeboren") body.appendChild(tagEl("Stilgeboren", "still"));
+      });
+      if ((rec.babys || []).length > 1) body.appendChild(tagEl("Meerling", "plain"));
+      var zw = fmtZwanger(rec.weken, rec.dagen);
+      if (zw) body.appendChild(tagEl(zw, "plain"));
+      if (rec.plaats) body.appendChild(tagEl(rec.plaats, "plain"));
+      if (rec.wijze) body.appendChild(tagEl(rec.wijze, "plain"));
+      var gew = (rec.babys || []).filter(function (k) { return k.gewicht; }).map(function (k) { return k.gewicht + " g"; }).join(" · ");
+      if (gew) body.appendChild(tagEl(gew, "plain"));
+      sh.main.appendChild(body);
+      if (rec.notitie) sh.main.appendChild(el("div", "entry-note", rec.notitie));
+      ul.appendChild(sh.li);
+    });
+    return ul;
+  }
+
+  function listNicu(list) {
+    var ul = el("ul", "entries");
+    list.forEach(function (rec) {
+      var sh = entryShell(rec, "nicu", "var(--nicu)");
+      if (rec.naam) {
+        var nm = el("span", null, rec.naam);
+        nm.style.fontWeight = "700";
+        sh.top.insertBefore(nm, sh.top.firstChild);
+      }
+      var body = el("div", "entry-body");
+      body.appendChild(sexTag(rec.geslacht));
+      var zw = fmtZwanger(rec.weken, rec.dagen);
+      if (zw) body.appendChild(tagEl(zw, "plain"));
+      if (rec.gewicht) body.appendChild(tagEl(rec.gewicht + " g", "plain"));
+      if (rec.reden) body.appendChild(tagEl(rec.reden, "nicu"));
+      if (rec.duur) body.appendChild(tagEl(rec.duur + (rec.duur === 1 ? " dag zorg" : " dagen zorg"), "plain"));
+      sh.main.appendChild(body);
+      if (rec.notitie) sh.main.appendChild(el("div", "entry-note", rec.notitie));
+      ul.appendChild(sh.li);
+    });
+    return ul;
+  }
+
+  function emptyBox(titel, tekst) {
+    var d = el("div", "empty");
+    d.appendChild(el("strong", null, titel));
+    d.appendChild(document.createTextNode(tekst));
+    return d;
+  }
+
+  function paneJaren(data) {
+    var wrap = el("div", "pane");
+    var card = el("div", "card");
+    card.style.marginTop = "0";
+    var ch = el("div", "ch");
+    ch.appendChild(el("h2", null, "Per jaar"));
+    ch.appendChild(el("span", "note", "tik op een rij om dat jaar te tonen"));
+    card.appendChild(ch);
+
+    var years = allYears(data).filter(function (y) {
+      return filterYear(data.bevallingen, y).length || filterYear(data.nicu, y).length;
+    });
+    if (!years.length) {
+      card.appendChild(emptyBox("Nog geen geschiedenis", "Zodra je registreert, verschijnt hier een rij per jaar."));
+      wrap.appendChild(card);
+      return wrap;
+    }
+
+    var tw = el("div", "table-wrap");
+    var t = el("table", "years");
+    t.innerHTML = "<thead><tr><th>Jaar</th><th>Bev.</th><th>Baby's</th><th>Jongens</th><th>Meisjes</th><th>Stilgeb.</th><th>NICU</th></tr></thead>";
+    var tb = el("tbody");
+    years.forEach(function (y) {
+      var s = statsFor(filterYear(data.bevallingen, y), filterYear(data.nicu, y));
+      var tr = el("tr");
+      [y, s.bevallingen, s.babys, s.jongens, s.meisjes, s.stil, s.nicu].forEach(function (v) { tr.appendChild(el("td", null, String(v))); });
+      tr.addEventListener("click", function () { state.year = y; state.tab = "overzicht"; render(); });
+      tb.appendChild(tr);
+    });
+    if (years.length > 1) {
+      var tot = statsFor(data.bevallingen, data.nicu);
+      var tr2 = el("tr", "total");
+      ["Totaal", tot.bevallingen, tot.babys, tot.jongens, tot.meisjes, tot.stil, tot.nicu].forEach(function (v) { tr2.appendChild(el("td", null, String(v))); });
+      tb.appendChild(tr2);
+    }
+    t.appendChild(tb);
+    tw.appendChild(t);
+    card.appendChild(tw);
+    wrap.appendChild(card);
+    return wrap;
+  }
+
+  function settingsContent() {
+    var wrap = el("div");
+
+    /* --- opslag --- */
+    var c1 = el("div", "card");
+    c1.style.marginTop = "0";
+    var ch1 = el("div", "ch");
+    ch1.appendChild(el("h2", null, "Opslag"));
+    ch1.appendChild(el("span", "note", storageOk ? "op dit toestel" : "werkt niet"));
+    c1.appendChild(ch1);
+
+    c1.appendChild(el("p", "setting-p", storageInfoText()));
+
+    var bl = el("p", "setting-p");
+    bl.appendChild(el("strong", null, backupLine()));
+    c1.appendChild(bl);
+
+    var pn = el("p", "setting-p hint");
+    fillPersistNote(pn);
+    c1.appendChild(pn);
+
+    var row = el("div", "datarow");
+    var b1 = el("button", "btn small primary", "Back-up exporteren");
+    b1.type = "button";
+    b1.addEventListener("click", exportJson);
+    var b2 = el("button", "btn small", "Back-up importeren");
+    b2.type = "button";
+    b2.addEventListener("click", function () { $("importFile").click(); });
+    var b3 = el("button", "btn small", "CSV exporteren");
+    b3.type = "button";
+    b3.addEventListener("click", exportCsv);
+    row.appendChild(b1); row.appendChild(b2); row.appendChild(b3);
+    c1.appendChild(row);
+    c1.appendChild(el("p", "setting-p hint", "De back-up is één bestand met al je registraties. Bewaar het telkens op dezelfde plaats, dan vervangt het de vorige. Importeren voegt enkel toe wat nog ontbreekt — het overschrijft nooit iets."));
+    wrap.appendChild(c1);
+
+    /* --- link --- */
+    var c2 = el("div", "card");
+    var ch2 = el("div", "ch");
+    ch2.appendChild(el("h2", null, "Link naar deze app"));
+    c2.appendChild(ch2);
+    var link = appLink();
+    if (link) {
+      c2.appendChild(el("p", "setting-p", "Bewaar deze link. Je registraties horen bij dit adres in deze browser."));
+      var lb = el("div", "linkbox");
+      var inp = document.createElement("input");
+      inp.type = "text";
+      inp.readOnly = true;
+      inp.id = "appLinkInput";
+      inp.value = link;
+      inp.addEventListener("focus", function () { this.select(); });
+      var cp = el("button", "btn small", "Kopieer");
+      cp.type = "button";
+      cp.addEventListener("click", function () {
+        inp.focus(); inp.select();
+        var done = false;
+        try {
+          if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(link).then(function () { toast("Link gekopieerd"); }, function () { toast("Kopieer de link met lang indrukken"); });
+            done = true;
+          }
+        } catch (e) {}
+        if (!done) toast("Kopieer de link met lang indrukken");
+      });
+      lb.appendChild(inp); lb.appendChild(cp);
+      c2.appendChild(lb);
+    } else {
+      c2.appendChild(el("p", "setting-p", "De link staat in de adresbalk van je browser, of onder de deelknop van Claude. Zet de app op je beginscherm of bij je favorieten, dan vind je ze altijd terug — je registraties horen bij die ene app in deze browser."));
+    }
+    wrap.appendChild(c2);
+
+    /* --- beginscherm --- */
+    var c2b = el("div", "card");
+    var ch2b = el("div", "ch");
+    ch2b.appendChild(el("h2", null, "Op je beginscherm"));
+    c2b.appendChild(ch2b);
+
+    if (isStandalone()) {
+      c2b.appendChild(el("p", "setting-p", "Je gebruikt de app vanaf je beginscherm. Je registraties horen bij deze snelkoppeling — open ze voortaan altijd zo."));
+    } else if (isFramed()) {
+      c2b.appendChild(el("p", "setting-p", "Je bekijkt de app nu binnen Claude. Open ze eerst in je browser — via de adresbalk of de deelknop hierboven — en zet ze daar op je beginscherm."));
+      c2b.appendChild(el("p", "setting-p hint", "iPhone: deelknop onderaan, dan \u201cZet op beginscherm\u201d. Android: menu met de drie puntjes, dan \u201cApp installeren\u201d of \u201cToevoegen aan startscherm\u201d."));
+    } else {
+      c2b.appendChild(el("p", "setting-p", "Zet de app op je beginscherm. Ze opent dan als een gewone app, zonder adresbalk, en je gegevens blijven het best bewaard."));
+      c2b.appendChild(el("p", "setting-p hint", "iPhone: deelknop onderaan, dan \u201cZet op beginscherm\u201d. Android: menu met de drie puntjes, dan \u201cApp installeren\u201d of \u201cToevoegen aan startscherm\u201d."));
+      if (installPrompt) {
+        var ib = el("button", "btn small primary", "Nu op beginscherm zetten");
+        ib.type = "button";
+        ib.addEventListener("click", function () {
+          var p = installPrompt;
+          installPrompt = null;
+          try { p.prompt(); } catch (e) {}
+        });
+        c2b.appendChild(ib);
+      }
+    }
+    var warn = el("p", "setting-p");
+    warn.appendChild(el("strong", null, "Doe dit voor je begint te registreren."));
+    warn.appendChild(document.createTextNode(" Wat je invult, hoort bij de manier waarop je de app opende. Registraties uit de app op je beginscherm zie je niet terug in een gewoon browservenster, en omgekeerd."));
+    c2b.appendChild(warn);
+    wrap.appendChild(c2b);
+
+    /* --- alles wissen --- */
+    var c3 = el("div", "card");
+    var ch3 = el("div", "ch");
+    ch3.appendChild(el("h2", null, "Alles wissen"));
+    c3.appendChild(ch3);
+    c3.appendChild(el("p", "setting-p", "Verwijdert elke registratie van dit toestel. Dit kan niet ongedaan gemaakt worden — maak eerst een back-up."));
+    var wipe = el("button", "btn small danger", "Alle registraties wissen");
+    wipe.type = "button";
+    var armed = false, timer = null;
+    wipe.addEventListener("click", function () {
+      if (!armed) {
+        armed = true;
+        wipe.textContent = "Zeker? Tik nog eens om te wissen";
+        clearTimeout(timer);
+        timer = setTimeout(function () { armed = false; wipe.textContent = "Alle registraties wissen"; }, 5000);
+        return;
+      }
+      clearTimeout(timer);
+      state.bevallingen = [];
+      state.nicu = [];
+      state.demoHidden = false;
+      saveAll();
+      render();
+      toast("Alles gewist");
+    });
+    c3.appendChild(wipe);
+    wrap.appendChild(c3);
+
+    return wrap;
+  }
+
+  function fillSettings() {
+    var body = $("setBody");
+    body.textContent = "";
+    body.appendChild(settingsContent());
+  }
+  function openSettings() {
+    fillSettings();
+    $("setDialog").showModal();
+  }
+
+  /* ---------------- hoofdrender ---------------- */
+
+  function renderYearSelect(data) {
+    var sel = $("yearSelect");
+    var years = allYears(data);
+    if (state.year !== "all" && years.indexOf(state.year) === -1) years.unshift(state.year);
+    sel.textContent = "";
+    years.forEach(function (y) {
+      var o = el("option", null, y);
+      o.value = y;
+      sel.appendChild(o);
+    });
+    var oa = el("option", null, "Alle jaren");
+    oa.value = "all";
+    sel.appendChild(oa);
+    sel.value = state.year;
+    $("yearVal").textContent = state.year === "all" ? "Alle" : state.year;
+  }
+
+  function render() {
+    var data = viewData();
+    if (state.tab === "meer") state.tab = "overzicht";
+    $("demoBanner").hidden = !showingDemo();
+    setStorageUI();
+    renderYearSelect(data);
+
+    var bevs = filterYear(data.bevallingen, state.year).sort(byDateDesc);
+    var nics = filterYear(data.nicu, state.year).sort(byDateDesc);
+    $("tabBevN").textContent = bevs.length ? bevs.length : "";
+    $("tabNicuN").textContent = nics.length ? nics.length : "";
+
+    document.querySelectorAll('nav.tabs button').forEach(function (b) {
+      b.setAttribute("aria-selected", b.dataset.tab === state.tab ? "true" : "false");
+    });
+
+    var pane = $("pane");
+    pane.textContent = "";
+    if (state.tab === "overzicht") {
+      pane.appendChild(paneOverzicht(data));
+    } else if (state.tab === "jaren") {
+      pane.appendChild(paneJaren(data));
+    } else if (state.tab === "bevallingen") {
+      var w = el("div", "pane");
+      w.appendChild(bevs.length ? listBevallingen(bevs)
+        : emptyBox("Nog geen bevallingen", state.year === "all" ? "Voeg je eerste registratie toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      pane.appendChild(w);
+    } else {
+      var w2 = el("div", "pane");
+      w2.appendChild(nics.length ? listNicu(nics)
+        : emptyBox("Nog geen NICU-kindjes", state.year === "all" ? "Voeg je eerste kindje toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      pane.appendChild(w2);
+    }
+
+    if ($("setDialog").open) fillSettings();
+  }
+
+  /* =========================================================
+     Invoer
+     ========================================================= */
+
+  function sexPickValue(container) {
+    var b = container.querySelector('[aria-pressed="true"]');
+    return b ? b.dataset.sex : null;
+  }
+  function sexPickSet(container, val) {
+    container.querySelectorAll("button").forEach(function (b) {
+      b.setAttribute("aria-pressed", b.dataset.sex === val ? "true" : "false");
+    });
+  }
+  function wireSexPick(container, onChange) {
+    container.addEventListener("click", function (ev) {
+      var b = ev.target.closest("button[data-sex]");
+      if (!b) return;
+      sexPickSet(container, b.dataset.sex);
+      if (onChange) onChange();
+    });
+  }
+
+  function babyCard(data, index) {
+    var card = el("div", "baby-card");
+    var head = el("div", "bhead");
+    head.appendChild(el("span", "eyebrow", "Extra kindje " + index));
+    var rm = el("button", "icon-btn del", "Verwijderen");
+    rm.type = "button";
+    rm.addEventListener("click", function () { card.remove(); renumberBabies(); updateBevSave(); });
+    head.appendChild(rm);
+    card.appendChild(head);
+
+    var pick = el("div", "sexpick");
+    pick.innerHTML = '<button type="button" data-sex="jongen" aria-pressed="false">Jongen</button>' +
+                     '<button type="button" data-sex="meisje" aria-pressed="false">Meisje</button>';
+    wireSexPick(pick, updateBevSave);
+    card.appendChild(pick);
+
+    var chips = el("div", "chiprow");
+    var stil = el("button", "chip", "Stilgeboren");
+    stil.type = "button";
+    stil.setAttribute("aria-pressed", "false");
+    stil.dataset.f = "stil";
+    stil.addEventListener("click", function () {
+      stil.setAttribute("aria-pressed", stil.getAttribute("aria-pressed") === "true" ? "false" : "true");
+    });
+    chips.appendChild(stil);
+    card.appendChild(chips);
+
+    var row = el("div", "row2");
+    row.style.marginTop = "10px";
+    row.innerHTML = '<div class="field" style="margin-top:0"><label>Gewicht (g)</label><input type="number" data-f="gewicht" min="200" max="7000" step="5" inputmode="numeric" placeholder="optioneel"></div>' +
+                    '<div class="field" style="margin-top:0"><label>Roepnaam</label><input type="text" data-f="naam" maxlength="40" placeholder="optioneel"></div>';
+    card.appendChild(row);
+
+    if (data) {
+      sexPickSet(pick, data.geslacht);
+      stil.setAttribute("aria-pressed", data.uitkomst === "stilgeboren" ? "true" : "false");
+      card.querySelector('[data-f="gewicht"]').value = data.gewicht || "";
+      card.querySelector('[data-f="naam"]').value = data.naam || "";
+    }
+    return card;
+  }
+
+  function renumberBabies() {
+    var cards = $("babyList").querySelectorAll(".baby-card");
+    for (var i = 0; i < cards.length; i++) cards[i].querySelector(".eyebrow").textContent = "Extra kindje " + (i + 2);
+  }
+
+  function updateBevSave() {
+    var ok = !!sexPickValue($("bevSex"));
+    $("babyList").querySelectorAll(".baby-card .sexpick").forEach(function (p) {
+      if (!sexPickValue(p)) ok = false;
+    });
+    $("bevSave").disabled = !ok;
+  }
+  function updateNicuSave() { $("nicuSave").disabled = !sexPickValue($("nicuSex")); }
+
+  function openBevDialog(rec) {
+    state.editing = rec ? { type: "bevalling", id: rec.id } : null;
+    $("bevDlgTitle").textContent = rec ? "Bevalling bewerken" : "Bevalling";
+    var first = rec && rec.babys && rec.babys[0] ? rec.babys[0] : null;
+    sexPickSet($("bevSex"), first ? first.geslacht : null);
+    $("bevStil").setAttribute("aria-pressed", first && first.uitkomst === "stilgeboren" ? "true" : "false");
+    $("bevDatum").value = rec && rec.datum ? rec.datum : today();
+    $("bevPlaats").value = rec && rec.plaats ? rec.plaats : "";
+    $("bevWijze").value = rec && rec.wijze ? rec.wijze : "";
+    $("bevWeken").value = rec && rec.weken != null ? rec.weken : "";
+    $("bevDagen").value = rec && rec.dagen != null ? rec.dagen : "";
+    $("bevGewicht").value = first && first.gewicht != null ? first.gewicht : "";
+    $("bevNaam").value = first && first.naam ? first.naam : "";
+    $("bevNotitie").value = rec && rec.notitie ? rec.notitie : "";
+
+    var list = $("babyList");
+    list.textContent = "";
+    var extra = (rec && rec.babys) ? rec.babys.slice(1) : [];
+    extra.forEach(function (b, i) { list.appendChild(babyCard(b, i + 2)); });
+
+    $("bevMore").open = !!(rec && (rec.datum !== today() || rec.plaats || rec.wijze || rec.weken != null || rec.notitie || extra.length));
+    updateBevSave();
+    $("bevDialog").showModal();
+  }
+
+  function readBevForm() {
+    var g = sexPickValue($("bevSex"));
+    if (!g) { toast("Kies jongen of meisje"); return null; }
+    var babys = [{
+      geslacht: g,
+      uitkomst: $("bevStil").getAttribute("aria-pressed") === "true" ? "stilgeboren" : "levend",
+      gewicht: num($("bevGewicht").value),
+      naam: $("bevNaam").value.trim()
+    }];
+    var ok = true;
+    $("babyList").querySelectorAll(".baby-card").forEach(function (card) {
+      var s = sexPickValue(card.querySelector(".sexpick"));
+      if (!s) { ok = false; return; }
+      babys.push({
+        geslacht: s,
+        uitkomst: card.querySelector('[data-f="stil"]').getAttribute("aria-pressed") === "true" ? "stilgeboren" : "levend",
+        gewicht: num(card.querySelector('[data-f="gewicht"]').value),
+        naam: card.querySelector('[data-f="naam"]').value.trim()
+      });
+    });
+    if (!ok) { toast("Kies ook voor het extra kindje jongen of meisje"); return null; }
+    return {
+      id: state.editing ? state.editing.id : uid4(),
+      datum: $("bevDatum").value || today(),
+      plaats: $("bevPlaats").value,
+      weken: num($("bevWeken").value),
+      dagen: num($("bevDagen").value),
+      wijze: $("bevWijze").value,
+      notitie: $("bevNotitie").value.trim(),
+      babys: babys
+    };
+  }
+
+  function openNicuDialog(rec) {
+    state.editing = rec ? { type: "nicu", id: rec.id } : null;
+    $("nicuDlgTitle").textContent = rec ? "NICU-kindje bewerken" : "NICU-kindje";
+    sexPickSet($("nicuSex"), rec ? rec.geslacht : null);
+    $("nicuDatum").value = rec && rec.datum ? rec.datum : today();
+    $("nicuWeken").value = rec && rec.weken != null ? rec.weken : "";
+    $("nicuDagen").value = rec && rec.dagen != null ? rec.dagen : "";
+    $("nicuGewicht").value = rec && rec.gewicht != null ? rec.gewicht : "";
+    $("nicuReden").value = rec && rec.reden ? rec.reden : "";
+    $("nicuDuur").value = rec && rec.duur != null ? rec.duur : "";
+    $("nicuNaam").value = rec && rec.naam ? rec.naam : "";
+    $("nicuNotitie").value = rec && rec.notitie ? rec.notitie : "";
+    $("nicuMore").open = !!(rec && (rec.datum !== today() || rec.weken != null || rec.reden || rec.notitie));
+    updateNicuSave();
+    $("nicuDialog").showModal();
+  }
+
+  function readNicuForm() {
+    var g = sexPickValue($("nicuSex"));
+    if (!g) { toast("Kies jongen of meisje"); return null; }
+    return {
+      id: state.editing ? state.editing.id : uid4(),
+      datum: $("nicuDatum").value || today(),
+      geslacht: g,
+      weken: num($("nicuWeken").value),
+      dagen: num($("nicuDagen").value),
+      gewicht: num($("nicuGewicht").value),
+      reden: $("nicuReden").value,
+      duur: num($("nicuDuur").value),
+      naam: $("nicuNaam").value.trim(),
+      notitie: $("nicuNotitie").value.trim()
+    };
+  }
+
+  /* ---------------- opslaan / wissen ---------------- */
+
+  async function upsert(type, rec) {
+    var list = type === "bevalling" ? state.bevallingen : state.nicu;
+    var years = {};
+    years[yearOf(rec)] = true;
+    var i = -1;
+    for (var k = 0; k < list.length; k++) if (list[k].id === rec.id) { i = k; break; }
+    if (i >= 0) { years[yearOf(list[i])] = true; list[i] = rec; } else { list.push(rec); }
+    state.demoHidden = false;
+    if (state.year !== "all" && state.year !== yearOf(rec)) state.year = yearOf(rec);
+    render();
+    saveAll();
+    toast(i >= 0 ? "Aangepast" : "Geregistreerd");
+  }
+
+  async function removeRecord(type, id) {
+    var list = type === "bevalling" ? state.bevallingen : state.nicu;
+    var i = -1;
+    for (var k = 0; k < list.length; k++) if (list[k].id === id) { i = k; break; }
+    if (i < 0) return;
+    var y = yearOf(list[i]);
+    list.splice(i, 1);
+    render();
+    saveAll();
+    toast("Gewist");
+  }
+
+  function openEditor(type, id) {
+    var list = type === "bevalling" ? state.bevallingen : state.nicu;
+    for (var k = 0; k < list.length; k++) {
+      if (list[k].id === id) {
+        if (type === "bevalling") openBevDialog(list[k]); else openNicuDialog(list[k]);
+        return;
+      }
+    }
+  }
+
+  /* ---------------- export / import ---------------- */
+
+  function offerFile(filename, text) {
+    try {
+      var type = /\.csv$/i.test(filename) ? "text/csv;charset=utf-8" : "application/json;charset=utf-8";
+      var blob = new Blob([text], { type: type });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function () { URL.revokeObjectURL(url); a.remove(); }, 2000);
+      toast("Bestand gedownload");
+      return Promise.resolve(true);
+    } catch (e) {
+      toast("Downloaden lukt niet in deze browser");
+      return Promise.resolve(false);
+    }
+  }
+
+  async function exportJson() {
+    var ok = await offerFile("geboorteregister-backup.json", JSON.stringify({
+      app: "geboorteregister", versie: 1, geexporteerd: new Date().toISOString(),
+      bevallingen: state.bevallingen, nicu: state.nicu
+    }, null, 2));
+    if (ok) { markBackup(); render(); }
+  }
+
+  function csvCell(v) {
+    var s = v == null ? "" : String(v);
+    return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+  }
+  function exportCsv() {
+    var rows = [["soort", "datum", "geslacht", "uitkomst", "gewicht_g", "zwangerschapsduur", "plaats_of_reden", "verloop_of_dagen", "naam", "notitie"]];
+    state.bevallingen.slice().sort(function (a, b) { return (a.datum || "").localeCompare(b.datum || ""); }).forEach(function (b) {
+      (b.babys || []).forEach(function (k) {
+        rows.push(["bevalling", b.datum, k.geslacht, k.uitkomst, k.gewicht, fmtZwanger(b.weken, b.dagen) || "", b.plaats || "", b.wijze || "", k.naam || "", b.notitie || ""]);
+      });
+    });
+    state.nicu.slice().sort(function (a, b) { return (a.datum || "").localeCompare(b.datum || ""); }).forEach(function (n) {
+      rows.push(["nicu", n.datum, n.geslacht, "", n.gewicht, fmtZwanger(n.weken, n.dagen) || "", n.reden || "", n.duur || "", n.naam || "", n.notitie || ""]);
+    });
+    offerFile("geboorteregister-" + today() + ".csv", "﻿" + rows.map(function (r) { return r.map(csvCell).join(";"); }).join("\n"));
+  }
+
+  async function importJson(file) {
+    var text = await file.text(), parsed;
+    try { parsed = JSON.parse(text); } catch (e) { toast("Geen geldige back-up"); return; }
+    if (!parsed || (!Array.isArray(parsed.bevallingen) && !Array.isArray(parsed.nicu))) { toast("Geen geldige back-up"); return; }
+    var have = {};
+    state.bevallingen.concat(state.nicu).forEach(function (r) { have[r.id] = true; });
+    var added = 0, years = {};
+    (parsed.bevallingen || []).forEach(function (r) {
+      if (!r || !r.datum || have[r.id]) return;
+      if (!r.id) r.id = uid4();
+      state.bevallingen.push(r); years[yearOf(r)] = true; added++;
+    });
+    (parsed.nicu || []).forEach(function (r) {
+      if (!r || !r.datum || have[r.id]) return;
+      if (!r.id) r.id = uid4();
+      state.nicu.push(r); years[yearOf(r)] = true; added++;
+    });
+    if (!added) { toast("Niets toegevoegd — alles stond er al in"); return; }
+    state.demoHidden = false;
+    render();
+    saveAll();
+    toast(added + " registraties toegevoegd");
+  }
+
+  /* =========================================================
+     Koppelen
+     ========================================================= */
+
+  document.querySelectorAll("nav.tabs button").forEach(function (b) {
+    b.addEventListener("click", function () { state.tab = b.dataset.tab; render(); });
+  });
+  $("yearSelect").addEventListener("change", function () { state.year = this.value; render(); });
+  $("menuBtn").addEventListener("click", openSettings);
+  $("hideDemo").addEventListener("click", function () { state.demoHidden = true; render(); });
+
+  $("addBev").addEventListener("click", function () { openBevDialog(null); });
+  $("addNicu").addEventListener("click", function () { openNicuDialog(null); });
+  $("addBaby").addEventListener("click", function () {
+    var list = $("babyList");
+    list.appendChild(babyCard(null, list.children.length + 2));
+    renumberBabies();
+    updateBevSave();
+  });
+
+  wireSexPick($("bevSex"), updateBevSave);
+  wireSexPick($("nicuSex"), updateNicuSave);
+  $("bevStil").addEventListener("click", function () {
+    this.setAttribute("aria-pressed", this.getAttribute("aria-pressed") === "true" ? "false" : "true");
+  });
+
+  document.querySelectorAll("[data-close]").forEach(function (b) {
+    b.addEventListener("click", function () { $(b.getAttribute("data-close")).close(); });
+  });
+
+  $("bevSave").addEventListener("click", async function () {
+    var rec = readBevForm();
+    if (!rec) return;
+    $("bevDialog").close();
+    await upsert("bevalling", rec);
+    state.editing = null;
+  });
+  $("nicuSave").addEventListener("click", async function () {
+    var rec = readNicuForm();
+    if (!rec) return;
+    $("nicuDialog").close();
+    await upsert("nicu", rec);
+    state.editing = null;
+  });
+
+  $("importFile").addEventListener("change", function () {
+    if (this.files && this.files[0]) importJson(this.files[0]);
+    this.value = "";
+  });
+
+  render();
+  initStorage();
+})();
+</script>
+
+</body>
+</html>
