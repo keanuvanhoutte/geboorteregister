@@ -442,6 +442,29 @@
   }
   #setBody .card:last-child { border-bottom: 0; margin-bottom: 0; padding-bottom: 0; }
 
+  /* filters */
+  .filters { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 8px; }
+  .fsel { min-height: 40px; padding: 8px 10px; font-size: 13.5px; border-radius: 10px; }
+  .fsel.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-deep); font-weight: 700; }
+  .filter-sum { display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    font-size: 12.5px; color: var(--ink-soft); margin: 0 2px 10px; }
+  .linkbtn { border: 0; background: transparent; color: var(--accent-deep); font-weight: 700;
+    font-size: 13px; cursor: pointer; padding: 8px 4px; min-height: 36px; }
+  .empty .linkbtn { margin-top: 6px; }
+
+  /* aanklikbare tegels en legende */
+  button.stat { font: inherit; color: inherit; text-align: left; cursor: pointer; width: 100%;
+    transition: transform .1s ease, filter .15s ease; }
+  button.stat:hover { filter: brightness(.97); }
+  button.stat:active { transform: scale(.98); }
+  button.stat .l::after { content: " \203A"; opacity: .6; }
+  button.it { font: inherit; color: inherit; cursor: pointer; background: var(--surface);
+    border: 1px solid var(--line-strong); border-radius: 999px; padding: 6px 12px; min-height: 38px;
+    transition: background .15s ease, transform .1s ease; }
+  button.it:hover { background: var(--surface-2); }
+  button.it:active { transform: scale(.97); }
+  button.it::after { content: "\203A"; color: var(--ink-faint); margin-left: 2px; }
+
   .req-label { display: flex; align-items: baseline; gap: 8px; margin-bottom: 8px; }
   .req-label .eyebrow { margin-right: auto; }
   .req-label .req { font-size: 11px; font-weight: 700; color: var(--accent-deep); }
@@ -481,6 +504,8 @@
   .field > label { font-size: 12px; font-weight: 700; color: var(--ink-soft); }
   .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
   .row3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .row2 > *, .row3 > * { min-width: 0; }
+  input[type="date"] { min-width: 0; }
   .hint { font-size: 11.5px; color: var(--ink-faint); font-weight: 500; }
 
   .baby-card { border: 1px solid var(--line); border-radius: 12px; padding: 11px 12px; margin-top: 10px; background: var(--surface-2); }
@@ -544,6 +569,8 @@
     .month-axis span { font-size: 10px; }
 
     .banner { font-size: 12.5px; padding: 9px 10px; gap: 6px 8px; margin-bottom: 8px; }
+    .filters { grid-template-columns: 1fr 1fr; gap: 6px; }
+    .fsel { font-size: 13px; padding: 8px 9px; }
     .banner .grow { min-width: 140px; }
 
     ul.entries { gap: 6px; }
@@ -653,12 +680,11 @@
       <details class="more" id="bevMore">
         <summary>Meer invullen <span class="hint">(allemaal optioneel)</span></summary>
 
-        <div class="field">
-          <label for="bevDatum">Datum <span class="hint">— standaard vandaag</span></label>
-          <input type="date" id="bevDatum">
-        </div>
-
         <div class="row2">
+          <div class="field">
+            <label for="bevDatum">Datum</label>
+            <input type="date" id="bevDatum">
+          </div>
           <div class="field">
             <label for="bevPlaats">Plaats</label>
             <select id="bevPlaats">
@@ -670,13 +696,30 @@
               <option>Anders</option>
             </select>
           </div>
+        </div>
+
+        <div class="row2">
           <div class="field">
             <label for="bevWijze">Verloop</label>
             <select id="bevWijze">
               <option value="">—</option>
               <option>Spontaan vaginaal</option>
-              <option>Vacuüm of forceps</option>
+              <option>Ventouse</option>
+              <option>Kiwi</option>
+              <option>Forceps</option>
               <option>Keizersnede</option>
+            </select>
+          </div>
+          <div class="field" id="bevPerineumField">
+            <label for="bevPerineum">Perineum</label>
+            <select id="bevPerineum">
+              <option value="">—</option>
+              <option>Intact</option>
+              <option>Scheur 1e graad</option>
+              <option>Scheur 2e graad</option>
+              <option>Scheur 3e graad</option>
+              <option>Scheur 4e graad</option>
+              <option>Episiotomie</option>
             </select>
           </div>
         </div>
@@ -814,6 +857,10 @@
     bevallingen: [], nicu: [],
     year: String(new Date().getFullYear()),
     tab: "overzicht",
+    filters: {
+      bev: { kind: "", ga: "", wijze: "", perineum: "" },
+      nicu: { kind: "", ga: "", reden: "" }
+    },
     mode: "loading", loaded: false, demoHidden: false, backupHidden: false, editing: null
   };
 
@@ -855,9 +902,9 @@
     function d(m, day) { return y + "-" + String(m).padStart(2, "0") + "-" + String(day).padStart(2, "0"); }
     return {
       bevallingen: [
-        { id: "demo-b1", _demo: true, datum: d(6, 14), plaats: "Thuis", weken: 39, dagen: 2, wijze: "Spontaan vaginaal", notitie: "Waterbevalling, vlot verlopen.", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3240, naam: "" }] },
+        { id: "demo-b1", _demo: true, datum: d(6, 14), plaats: "Thuis", weken: 39, dagen: 2, wijze: "Spontaan vaginaal", perineum: "Scheur 1e graad", notitie: "Waterbevalling, vlot verlopen.", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3240, naam: "" }] },
         { id: "demo-b2", _demo: true, datum: d(4, 2), plaats: "Ziekenhuis", weken: 36, dagen: 0, wijze: "Keizersnede", notitie: "", babys: [{ geslacht: "jongen", uitkomst: "levend", gewicht: 2510, naam: "" }, { geslacht: "jongen", uitkomst: "levend", gewicht: 2380, naam: "" }] },
-        { id: "demo-b3", _demo: true, datum: d(2, 21), plaats: "Ziekenhuis", weken: 38, dagen: 4, wijze: "", notitie: "", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3510, naam: "" }] },
+        { id: "demo-b3", _demo: true, datum: d(2, 21), plaats: "Ziekenhuis", weken: 38, dagen: 4, wijze: "Ventouse", perineum: "Episiotomie", notitie: "", babys: [{ geslacht: "meisje", uitkomst: "levend", gewicht: 3510, naam: "" }] },
         { id: "demo-b4", _demo: true, datum: d(1, 9), plaats: "", weken: null, dagen: null, wijze: "", notitie: "", babys: [{ geslacht: "jongen", uitkomst: "levend", gewicht: null, naam: "" }] }
       ],
       nicu: [
@@ -1028,8 +1075,9 @@
      Weergave — onderdelen
      ========================================================= */
 
-  function statBox(label, value, foot, tint, tintSoft) {
-    var d = el("div", "stat" + (tintSoft ? " tint" : ""));
+  function statBox(label, value, foot, tint, tintSoft, onClick) {
+    var d = el(onClick ? "button" : "div", "stat" + (tintSoft ? " tint" : ""));
+    if (onClick) { d.type = "button"; d.addEventListener("click", onClick); }
     if (tint) d.style.setProperty("--tint", tint);
     if (tintSoft) d.style.setProperty("--tint-soft", tintSoft);
     d.appendChild(el("span", "l", label));
@@ -1062,9 +1110,14 @@
     card.appendChild(bar);
 
     var lg = el("div", "prop-legend");
-    function item(color, name, n) {
+    function item(color, name, n, onClick) {
       if (!n && name === "Niet genoteerd") return;
-      var it = el("div", "it");
+      var it = el(onClick ? "button" : "div", "it");
+      if (onClick) {
+        it.type = "button";
+        it.setAttribute("aria-label", "Toon " + name.toLowerCase());
+        it.addEventListener("click", onClick);
+      }
       var sw = el("span", "sw");
       sw.style.background = color;
       it.appendChild(sw);
@@ -1073,8 +1126,8 @@
       if (total) it.appendChild(el("span", "pct", Math.round(n / total * 100) + "%"));
       lg.appendChild(it);
     }
-    item("var(--boy)", "Jongens", s.jongens);
-    item("var(--girl)", "Meisjes", s.meisjes);
+    item("var(--boy)", "Jongens", s.jongens, function () { goList("bevallingen", "bev", { kind: "jongen" }); });
+    item("var(--girl)", "Meisjes", s.meisjes, function () { goList("bevallingen", "bev", { kind: "meisje" }); });
     item("var(--unknown)", "Niet genoteerd", s.onbekend);
     card.appendChild(lg);
     return card;
@@ -1108,6 +1161,149 @@
     MAAND_KORT.forEach(function (l) { ax.appendChild(el("span", null, l)); });
     card.appendChild(ax);
     return card;
+  }
+
+  /* ---------------- filters ---------------- */
+
+  var WIJZE_OPTS = ["Spontaan vaginaal", "Ventouse", "Kiwi", "Forceps", "Keizersnede"];
+  var PERI_OPTS = ["Intact", "Scheur 1e graad", "Scheur 2e graad", "Scheur 3e graad", "Scheur 4e graad", "Episiotomie"];
+  var REDEN_OPTS = ["Vroeggeboorte", "Laag geboortegewicht", "Ademhalingsondersteuning", "Infectie", "Geelzucht", "Voedingsproblemen", "Observatie", "Anders"];
+  var GA_OPTS = [["", "Elke duur"], ["lt28", "< 28 weken"], ["28", "28–31 weken"], ["32", "32–36 weken"],
+                 ["37", "37–41 weken"], ["42", "42+ weken"], ["na", "Duur niet ingevuld"]];
+
+  function gaBucket(w) {
+    if (w == null || w === "") return "na";
+    if (w < 28) return "lt28";
+    if (w < 32) return "28";
+    if (w < 37) return "32";
+    if (w < 42) return "37";
+    return "42";
+  }
+
+  function ensureOption(sel, val) {
+    if (!val) return;
+    for (var i = 0; i < sel.options.length; i++) if (sel.options[i].value === val) return;
+    var o = document.createElement("option");
+    o.value = val; o.textContent = val;
+    sel.appendChild(o);
+  }
+
+  function syncPerineum() {
+    var cs = $("bevWijze").value === "Keizersnede";
+    $("bevPerineumField").hidden = cs;
+    if (cs) $("bevPerineum").value = "";
+  }
+
+  function optsWithData(base, list, field) {
+    var seen = {}, out = [];
+    base.forEach(function (v) { seen[v] = true; out.push([v, v]); });
+    list.forEach(function (r) { var v = r[field]; if (v && !seen[v]) { seen[v] = true; out.push([v, v]); } });
+    return out;
+  }
+
+  function clearFilters(type) {
+    var f = state.filters[type];
+    for (var k in f) f[k] = "";
+  }
+  function filtersActive(type) {
+    var f = state.filters[type];
+    for (var k in f) if (f[k]) return true;
+    return false;
+  }
+
+  function goList(tab, type, preset) {
+    clearFilters(type);
+    if (preset) for (var k in preset) state.filters[type][k] = preset[k];
+    state.tab = tab;
+    render();
+    try { window.scrollTo(0, 0); } catch (e) {}
+  }
+
+  function applyBevFilters(list) {
+    var f = state.filters.bev;
+    return list.filter(function (b) {
+      var ks = b.babys || [];
+      if (f.kind === "jongen" && !ks.some(function (k) { return k.geslacht === "jongen"; })) return false;
+      if (f.kind === "meisje" && !ks.some(function (k) { return k.geslacht === "meisje"; })) return false;
+      if (f.kind === "stil" && !ks.some(function (k) { return k.uitkomst === "stilgeboren"; })) return false;
+      if (f.kind === "meerling" && ks.length < 2) return false;
+      if (f.ga && gaBucket(b.weken) !== f.ga) return false;
+      if (f.wijze && b.wijze !== f.wijze) return false;
+      if (f.perineum && b.perineum !== f.perineum) return false;
+      return true;
+    });
+  }
+
+  function applyNicuFilters(list) {
+    var f = state.filters.nicu;
+    return list.filter(function (n) {
+      if (f.kind && n.geslacht !== f.kind) return false;
+      if (f.ga && gaBucket(n.weken) !== f.ga) return false;
+      if (f.reden && n.reden !== f.reden) return false;
+      return true;
+    });
+  }
+
+  function filterSelect(id, opts, value, label, onChange) {
+    var sel = document.createElement("select");
+    sel.id = id;
+    sel.className = "fsel" + (value ? " on" : "");
+    sel.setAttribute("aria-label", label);
+    opts.forEach(function (o) {
+      var op = document.createElement("option");
+      op.value = o[0]; op.textContent = o[1];
+      sel.appendChild(op);
+    });
+    sel.value = value;
+    sel.addEventListener("change", function () { onChange(this.value); });
+    return sel;
+  }
+
+  function filterBar(type, total, shown, data) {
+    var f = state.filters[type];
+    var wrap = el("div");
+    var grid = el("div", "filters");
+    function set(key) { return function (v) { state.filters[type][key] = v; render(); }; }
+
+    if (type === "bev") {
+      grid.appendChild(filterSelect("f-bev-kind",
+        [["", "Alle kindjes"], ["jongen", "Jongens"], ["meisje", "Meisjes"], ["stil", "Stilgeboren"], ["meerling", "Meerlingen"]],
+        f.kind, "Toon kindjes", set("kind")));
+      grid.appendChild(filterSelect("f-bev-ga", GA_OPTS, f.ga, "Zwangerschapsduur", set("ga")));
+      grid.appendChild(filterSelect("f-bev-wijze", [["", "Elk verloop"]].concat(optsWithData(WIJZE_OPTS, data.bevallingen, "wijze")),
+        f.wijze, "Verloop", set("wijze")));
+      grid.appendChild(filterSelect("f-bev-peri", [["", "Elk perineum"]].concat(optsWithData(PERI_OPTS, data.bevallingen, "perineum")),
+        f.perineum, "Perineum", set("perineum")));
+    } else {
+      grid.appendChild(filterSelect("f-nicu-kind", [["", "Alle kindjes"], ["jongen", "Jongens"], ["meisje", "Meisjes"]],
+        f.kind, "Toon kindjes", set("kind")));
+      grid.appendChild(filterSelect("f-nicu-ga", GA_OPTS, f.ga, "Zwangerschapsduur", set("ga")));
+      grid.appendChild(filterSelect("f-nicu-reden", [["", "Elke reden"]].concat(optsWithData(REDEN_OPTS, data.nicu, "reden")),
+        f.reden, "Reden van opname", set("reden")));
+    }
+    wrap.appendChild(grid);
+
+    if (filtersActive(type)) {
+      var sum = el("div", "filter-sum");
+      sum.appendChild(el("span", null, shown + " van " + total + " getoond"));
+      var clr = el("button", "linkbtn", "Wis filters");
+      clr.type = "button";
+      clr.addEventListener("click", function () { clearFilters(type); render(); });
+      sum.appendChild(clr);
+      wrap.appendChild(sum);
+    }
+    return wrap;
+  }
+
+  function filteredEmpty(type) {
+    var box = emptyBox("Niets gevonden", "Geen registraties die aan deze filters voldoen.");
+    var clr = el("button", "linkbtn", "Wis filters");
+    clr.type = "button";
+    clr.style.display = "block";
+    clr.style.margin = "6px auto 0";
+    clr.addEventListener("click", function () { clearFilters(type); render(); });
+    box.appendChild(clr);
+    return box;
   }
 
   /* ---------------- panelen ---------------- */
@@ -1164,16 +1360,21 @@
     wrap.appendChild(hero);
 
     var g = el("div", "grid3");
-    g.appendChild(statBox("Levend geboren", sel.levend, null, "var(--ok)", "var(--ok-soft)"));
-    g.appendChild(statBox("Stilgeboren", sel.stil, null, "var(--still)", "var(--still-soft)"));
-    g.appendChild(statBox("Meerlingen", sel.meerlingen, null, "var(--accent-deep)", "var(--accent-soft)"));
+    g.appendChild(statBox("Levend geboren", sel.levend, null, "var(--ok)", "var(--ok-soft)",
+      function () { goList("bevallingen", "bev", null); }));
+    g.appendChild(statBox("Stilgeboren", sel.stil, null, "var(--still)", "var(--still-soft)",
+      function () { goList("bevallingen", "bev", { kind: "stil" }); }));
+    g.appendChild(statBox("Meerlingen", sel.meerlingen, null, "var(--accent-deep)", "var(--accent-soft)",
+      function () { goList("bevallingen", "bev", { kind: "meerling" }); }));
     wrap.appendChild(g);
 
     wrap.appendChild(propBar(sel));
 
     var g2 = el("div", "grid2");
-    g2.appendChild(statBox("NICU-kindjes", sel.nicu, y === "all" ? null : "totaal ooit: " + all.nicu, "var(--nicu)", "var(--nicu-soft)"));
-    g2.appendChild(statBox("Dagen NICU-zorg", sel.nicuDagen, "in deze periode genoteerd", "var(--nicu)", "var(--nicu-soft)"));
+    g2.appendChild(statBox("NICU-kindjes", sel.nicu, y === "all" ? null : "totaal ooit: " + all.nicu, "var(--nicu)", "var(--nicu-soft)",
+      function () { goList("nicu", "nicu", null); }));
+    g2.appendChild(statBox("Dagen NICU-zorg", sel.nicuDagen, "in deze periode genoteerd", "var(--nicu)", "var(--nicu-soft)",
+      function () { goList("nicu", "nicu", null); }));
     wrap.appendChild(g2);
 
     wrap.appendChild(monthChart(filterYear(data.bevallingen, y), y));
@@ -1250,6 +1451,7 @@
       if (zw) body.appendChild(tagEl(zw, "plain"));
       if (rec.plaats) body.appendChild(tagEl(rec.plaats, "plain"));
       if (rec.wijze) body.appendChild(tagEl(rec.wijze, "plain"));
+      if (rec.perineum) body.appendChild(tagEl(rec.perineum === "Intact" ? "Perineum intact" : rec.perineum, "plain"));
       var gew = (rec.babys || []).filter(function (k) { return k.gewicht; }).map(function (k) { return k.gewicht + " g"; }).join(" · ");
       if (gew) body.appendChild(tagEl(gew, "plain"));
       sh.main.appendChild(body);
@@ -1517,13 +1719,23 @@
       pane.appendChild(paneJaren(data));
     } else if (state.tab === "bevallingen") {
       var w = el("div", "pane");
-      w.appendChild(bevs.length ? listBevallingen(bevs)
-        : emptyBox("Nog geen bevallingen", state.year === "all" ? "Voeg je eerste registratie toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      if (bevs.length) {
+        var fb = applyBevFilters(bevs);
+        w.appendChild(filterBar("bev", bevs.length, fb.length, data));
+        w.appendChild(fb.length ? listBevallingen(fb) : filteredEmpty("bev"));
+      } else {
+        w.appendChild(emptyBox("Nog geen bevallingen", state.year === "all" ? "Voeg je eerste registratie toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      }
       pane.appendChild(w);
     } else {
       var w2 = el("div", "pane");
-      w2.appendChild(nics.length ? listNicu(nics)
-        : emptyBox("Nog geen NICU-kindjes", state.year === "all" ? "Voeg je eerste kindje toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      if (nics.length) {
+        var fn = applyNicuFilters(nics);
+        w2.appendChild(filterBar("nicu", nics.length, fn.length, data));
+        w2.appendChild(fn.length ? listNicu(fn) : filteredEmpty("nicu"));
+      } else {
+        w2.appendChild(emptyBox("Nog geen NICU-kindjes", state.year === "all" ? "Voeg je eerste kindje toe met de knop onderaan." : "In " + state.year + " staat nog niets genoteerd."));
+      }
       pane.appendChild(w2);
     }
 
@@ -1616,7 +1828,6 @@
     $("bevStil").setAttribute("aria-pressed", first && first.uitkomst === "stilgeboren" ? "true" : "false");
     $("bevDatum").value = rec && rec.datum ? rec.datum : today();
     $("bevPlaats").value = rec && rec.plaats ? rec.plaats : "";
-    $("bevWijze").value = rec && rec.wijze ? rec.wijze : "";
     $("bevWeken").value = rec && rec.weken != null ? rec.weken : "";
     $("bevDagen").value = rec && rec.dagen != null ? rec.dagen : "";
     $("bevGewicht").value = first && first.gewicht != null ? first.gewicht : "";
@@ -1628,7 +1839,12 @@
     var extra = (rec && rec.babys) ? rec.babys.slice(1) : [];
     extra.forEach(function (b, i) { list.appendChild(babyCard(b, i + 2)); });
 
-    $("bevMore").open = !!(rec && (rec.datum !== today() || rec.plaats || rec.wijze || rec.weken != null || rec.notitie || extra.length));
+    ensureOption($("bevWijze"), rec && rec.wijze);
+    $("bevWijze").value = rec && rec.wijze ? rec.wijze : "";
+    ensureOption($("bevPerineum"), rec && rec.perineum);
+    $("bevPerineum").value = rec && rec.perineum ? rec.perineum : "";
+    syncPerineum();
+    $("bevMore").open = !!(rec && (rec.datum !== today() || rec.plaats || rec.wijze || rec.perineum || rec.weken != null || rec.notitie || extra.length));
     updateBevSave();
     $("bevDialog").showModal();
   }
@@ -1661,6 +1877,7 @@
       weken: num($("bevWeken").value),
       dagen: num($("bevDagen").value),
       wijze: $("bevWijze").value,
+      perineum: $("bevWijze").value === "Keizersnede" ? "" : $("bevPerineum").value,
       notitie: $("bevNotitie").value.trim(),
       babys: babys
     };
@@ -1773,14 +1990,14 @@
     return /[",;\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
   }
   function exportCsv() {
-    var rows = [["soort", "datum", "geslacht", "uitkomst", "gewicht_g", "zwangerschapsduur", "plaats_of_reden", "verloop_of_dagen", "naam", "notitie"]];
+    var rows = [["soort", "datum", "geslacht", "uitkomst", "gewicht_g", "zwangerschapsduur", "plaats_of_reden", "verloop_of_dagen", "perineum", "naam", "notitie"]];
     state.bevallingen.slice().sort(function (a, b) { return (a.datum || "").localeCompare(b.datum || ""); }).forEach(function (b) {
       (b.babys || []).forEach(function (k) {
-        rows.push(["bevalling", b.datum, k.geslacht, k.uitkomst, k.gewicht, fmtZwanger(b.weken, b.dagen) || "", b.plaats || "", b.wijze || "", k.naam || "", b.notitie || ""]);
+        rows.push(["bevalling", b.datum, k.geslacht, k.uitkomst, k.gewicht, fmtZwanger(b.weken, b.dagen) || "", b.plaats || "", b.wijze || "", b.perineum || "", k.naam || "", b.notitie || ""]);
       });
     });
     state.nicu.slice().sort(function (a, b) { return (a.datum || "").localeCompare(b.datum || ""); }).forEach(function (n) {
-      rows.push(["nicu", n.datum, n.geslacht, "", n.gewicht, fmtZwanger(n.weken, n.dagen) || "", n.reden || "", n.duur || "", n.naam || "", n.notitie || ""]);
+      rows.push(["nicu", n.datum, n.geslacht, "", n.gewicht, fmtZwanger(n.weken, n.dagen) || "", n.reden || "", n.duur || "", "", n.naam || "", n.notitie || ""]);
     });
     offerFile("geboorteregister-" + today() + ".csv", "﻿" + rows.map(function (r) { return r.map(csvCell).join(";"); }).join("\n"));
   }
@@ -1830,6 +2047,7 @@
   });
 
   wireSexPick($("bevSex"), updateBevSave);
+  $("bevWijze").addEventListener("change", syncPerineum);
   wireSexPick($("nicuSex"), updateNicuSave);
   $("bevStil").addEventListener("click", function () {
     this.setAttribute("aria-pressed", this.getAttribute("aria-pressed") === "true" ? "false" : "true");
